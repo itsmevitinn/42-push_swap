@@ -6,39 +6,45 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:42:44 by vsergio           #+#    #+#             */
-/*   Updated: 2022/08/01 17:33:01 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/08/01 23:37:36 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 void	sa(int stack[], int index);
-void	check_duplicated(int stack[]);
+void	pb(int stacka[], int *stackb);
+int	check_duplicated(int stack[], int len);
 int	main(void)
 {
-	int stack[] = {0, 4, 3, 3, 8, 6, 7, 1, 5, 2, 'a'};
+	int stacka[] = {0, 4, 9, 3, 8, 6, 7, 1, 5, 2, 'a'};
+	int *stackb;
 	int index;
 	int temp;
 	index = 0;
 	int len;
-	len = sizeof(stack) / 4;
+	len = sizeof(stacka) / 4;
 	printf("len da stack: %i\n", len);
-	check_duplicated(stack);
-	while(stack[index] < len)
+	pb(stacka, stackb);
+	printf("Valor stackb: %i\n", stackb[0]);
+	if (check_duplicated(stacka, len) == 0)
+		return (0);
+	while(stacka[index] < len)
 	{
-		if (stack[index] < stack[index + 1])
+		if (stacka[index] < stacka[index + 1])
 		{
 			index++;
 			write(1, "next\n", 5);
 		}
 		else
 		{
-			sa(stack, index);
+			sa(stacka, index);
 			index = 0;
 		}
 	}
 	int rato = 0;
-	while(stack[rato] != 'a')
-		printf("Resultado: %i\n", stack[rato++]);
+	while(stacka[rato] != 'a')
+		printf("valor stacka: %i\n", stacka[rato++]);
 	return(0);
 }
 
@@ -72,7 +78,39 @@ void	ss(int stack[], int index)
 	write(1, "ss\n", 3);
 }
 
-void	check_duplicated(int stack[], int len)
+void	pb(int stacka[], int *stackb)
+{
+	int *tempa;
+	int *tempb;
+	int indexstacka;
+	int indextempa;
+	int indexstackb;
+	int lenstacka;
+	int lenstackb;
+	tempb = malloc(150);
+	tempa = malloc(150);
+	// lenstacka = sizeof(stacka) / 4;
+	lenstackb = sizeof(stackb) / 4;
+	indexstacka = 0;
+	indextempa = 0;
+	indexstackb = 1;
+	while(stacka[indexstacka] != 'a')
+	{
+		tempa[indextempa] = stacka[indexstacka];
+		indexstacka++;
+		indextempa++;
+	}
+	while(stackb[indexstackb] < lenstackb)
+	{
+		tempb[indexstackb] = stackb[indexstackb];
+		indexstackb++;
+	}
+	tempb[0] = stacka[0];
+	stacka = tempa;
+	write(1, "pb\n", 3);
+}
+
+int	check_duplicated(int stack[], int len)
 {
 	int index;
 	
@@ -81,7 +119,11 @@ void	check_duplicated(int stack[], int len)
 	while (stack[index] < len)
 	{
 		if (stack[index] == stack[index + 1])
-			printf("Duplicated numbers at stack[%i] and stack[%i]", index, index + 1);
+		{
+			printf("Duplicated numbers at position [%i] and [%i] in stack\n", index, index + 1);
+			return (0);
+		}
 		index++;
 	}
+	return (1);
 }
