@@ -5,6 +5,7 @@ int	do_hash(char *key)
 	int random_hash;
 	int i;
 
+	i = 0;
 	random_hash = 4380;
 	while(key[i])
 	{

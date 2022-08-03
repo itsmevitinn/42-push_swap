@@ -6,11 +6,12 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:42:44 by vsergio           #+#    #+#             */
-/*   Updated: 2022/08/01 23:37:36 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/08/03 15:53:52 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
 #include <stdio.h>
+#include "push_swap.h"
 #include <stdlib.h>
 void	sa(int stack[], int index);
 void	pb(int stacka[], int *stackb);
