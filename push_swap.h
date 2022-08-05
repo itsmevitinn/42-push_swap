@@ -20,7 +20,7 @@ typedef struct hash
 int	ft_strlen(const char *str);
 int	insert_node(hash_list *hash, char *key, char *value);
 int	ft_strncmp(const char *str1, const char *str2, int n);
-int	do_hash(char *key);
+int	do_hash(int number);
 node_list	*create_node(char *key, char *value);
 
 #endif
