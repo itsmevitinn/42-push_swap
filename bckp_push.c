@@ -74,7 +74,8 @@ int	insert_node(hash_list *hash, int key, char *value)
 {
 	node_list *node;
 	int index_node;
-	index_node = do_hash(key, hash);
+	index_node = key;
+	// index_node = do_hash(key, hash);
 	node = hash->list[index_node];
 	if (!node)
 		hash->list[index_node] = create_node(key, value);

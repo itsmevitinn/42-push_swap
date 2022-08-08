@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:42:44 by vsergio           #+#    #+#             */
-/*   Updated: 2022/08/03 15:53:52 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/08/08 17:20:42 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -16,30 +16,32 @@
 void	sa(int stack[], int index);
 void	pb(int stacka[], int *stackb);
 int	check_duplicated(int stack[], int len);
-int	main(void)
+int	main(int argc, char **argv)
 {
-	int stacka[] = {0, 4, 9, 3, 8, 6, 7, 1, 5, 2, 'a'};
+	// int stacka[] = {0, 4, 9, 3, 8, 6, 7, 1, 5, 2, 'a'};
 	int *stackb;
 	int index;
 	int temp;
-	index = 0;
 	int len;
-	len = sizeof(stacka) / 4;
+	int i;
+	i = 0;
+	index = 0;
+	len = argc - 1;
 	printf("len da stack: %i\n", len);
-	pb(stacka, stackb);
+	// pb(stacka, stackb);
 	printf("Valor stackb: %i\n", stackb[0]);
 	if (check_duplicated(stacka, len) == 0)
 		return (0);
-	while(stacka[index] < len)
+	while(i < len)
 	{
-		if (stacka[index] < stacka[index + 1])
+		if (argv[index] < argv[index + 1])
 		{
 			index++;
 			write(1, "next\n", 5);
 		}
 		else
 		{
-			sa(stacka, index);
+			sa(argv[index], index);
 			index = 0;
 		}
 	}
