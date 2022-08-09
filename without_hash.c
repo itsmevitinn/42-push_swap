@@ -1,7 +1,7 @@
 #include "push_swap.h"
 #include <stdio.h>
 
-void	sa(hash_list *hash);
+void	sa(int *stack);
 int main(int argc, char **argv)
 {
 	int *numbers;
@@ -28,25 +28,16 @@ int main(int argc, char **argv)
 		indexnode++;
 		indexnumbers++;
 	}
-	sa(hash);
-	argc = 14;
-	i = 0;
-	indexnode = 0;
-	indexnumbers = 0;
-	while (i < --argc)
-	{
-		printf("Inteiro do array depois do atoi[%i]: %i\n", indexnumbers, numbers[indexnumbers]);
-		printf("Indice dos nos criados: node[%i]\n", node[indexnode]);
-		indexnode++;
-		indexnumbers++;
-	}
+	sa(node);
+	printf("Rato");
 }
 
-node_list	*create_node(int number)
+node_list	*create_node(int key, char *value)
 {
 	node_list *node;
 	node = malloc(sizeof(node_list));
-	node->value = number;
+	node->key = key;
+	node->value = value;
 	node->next = NULL;
 	return (node);
 }
@@ -64,12 +55,26 @@ char	*grepvalue(hash_list *hash, int key)
 	return (0);
 }
 
-void	sa(node_list *node)
+int	insert_node(hash_list *hash, int key, char *value)
 {
-	node_list *temp;
+	node_list *node;
+	int index_node;
+	index_node = key;
+	index_node = do_hash(key, hash);
+	node = hash->list[index_node];
+	if (!node)
+		hash->list[index_node] = create_node(key, value);
+	else
+		node->next = create_node(key, value);
+	return (index_node);
+}
 
-	temp = hash->list[0];
-	hash->list[0] = hash->list[1];
-	hash->list[1] = temp;
+void	sa(int *stack)
+{
+	int temp;
+
+	temp = stack[0];
+	stack[0] = stack[1];
+	stack[1] = temp;
 	write(1, "sa\n", 3);
 }
