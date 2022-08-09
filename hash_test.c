@@ -1,5 +1,7 @@
 #include "push_swap.h"
 #include <stdio.h>
+void	sa(node_list **list);
+int	insert_node(hash_list *hash, int value, int index_node);
 int main(int argc, char **argv)
 {
 	int *numbers;
@@ -20,12 +22,17 @@ int main(int argc, char **argv)
 	while (i < --argc)
 	{
 		numbers[indexnumbers] = ft_atoi(argv[indexargv++]);
-		printf("Inteiro do array depois do atoi[%i]: %i\n", indexnumbers, numbers[indexnumbers]);
-		node[indexnode] = insert_node(hash, numbers[indexnumbers], "sapo");
-		printf("Indice dos nos criados: node[%i]\n", node[indexnode]);
+		printf("Array de inteiros do atoi[%i]: Valor: %i\n", indexnumbers, numbers[indexnumbers]);
+		node[indexnode] = insert_node(hash, numbers[indexnumbers], indexnode);
+		printf("Indice na lista dos nos criados: node[%i]\n", node[indexnode]);
 		indexnode++;
 		indexnumbers++;
 	}
+	// sa(hash->list);
+	// node_list *valor;
+	// valor = hash->list[0];
+	hash->list[0] = hash->list[2];
+	printf("Valor do no apos troca: %i\n", hash->list[3]->value);
 	// hash_list *hash;
 	// int key; //here must be type int, because will be some number of array
 	// int key2; //here must be type int, because will be some number of array
@@ -47,38 +54,51 @@ int main(int argc, char **argv)
 	// printf("VALOR KEY2: %s\n", ret2);
 }
 
-node_list	*create_node(int key, char *value)
+void	sa(node_list **list)
+{
+	node_list *temp;
+	temp = list[1];
+	list[0] = list[1];
+	list[1] = temp;
+}
+
+void	sb(node_list **list)
+{
+	node_list *temp;
+	temp = list[1];
+	list[0] = list[1];
+	list[1] = temp;
+}
+
+node_list	*create_node(int number)
 {
 	node_list *node;
 	node = malloc(sizeof(node_list));
-	node->key = key;
-	node->value = value;
+	node->value = number;
 	node->next = NULL;
 	return (node);
 }
 
-char	*grepvalue(hash_list *hash, int key)
+char	*grepvalue(hash_list *hash, int number)
 {
-	int index_node = do_hash(key, hash);
+	int index_node = do_hash(number, hash);
 	while (hash->list[index_node])
 	{
-		if (hash->list[index_node]->key == key)
-			printf("Value index[%i]: %s\n", index_node, hash->list[index_node]->value);
+		if (hash->list[index_node]->value == number)
+			printf("Value index[%i]: %i\n", index_node, hash->list[index_node]->value);
 			// return hash->list[index_node]->value;
 		hash->list[index_node] = hash->list[index_node]->next;
 	}
 	return (0);
 }
 
-int	insert_node(hash_list *hash, int key, char *value)
+int	insert_node(hash_list *hash, int value, int index_node)
 {
 	node_list *node;
-	int index_node;
-	index_node = do_hash(key, hash);
 	node = hash->list[index_node];
 	if (!node)
-		hash->list[index_node] = create_node(key, value);
+		hash->list[index_node] = create_node(value);
 	else
-		node->next = create_node(key, value);
+		node->next = create_node(value);
 	return (index_node);
 }
