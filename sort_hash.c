@@ -1,7 +1,7 @@
 #include "push_swap.h"
 #include <stdio.h>
 
-hash_list *create_hash_list(int len_number)
+hash_list *create_stack_list(int len_number)
 {
 	// node_list *node;
 	hash_list *create;

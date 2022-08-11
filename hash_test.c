@@ -2,37 +2,73 @@
 #include <stdio.h>
 void	sa(node_list **list);
 int	insert_node(hash_list *hash, int value, int index_node);
+void	pb(node_list **list_a, node_list **list_b);
 int main(int argc, char **argv)
 {
-	int *numbers;
+	hash_list *stack_a;
+	hash_list *stack_b;
+	int *intnumbers;
 	int i;
 	int indexnumbers;
 	int indexargv;
 	int *node;
 	int indexnode;
-	hash_list *hash;
-	indexnode = 0;
-	hash = malloc(sizeof(hash_list));
-	hash = create_hash_list(argc - 1);
-	numbers = malloc(sizeof(int) * argc - 1);
+	stack_b = malloc(sizeof(hash_list));
+	stack_b = create_stack_list(argc - 2);
+	stack_a = malloc(sizeof(hash_list));
+	stack_a = create_stack_list(argc - 2);
+	intnumbers = malloc(sizeof(int) * argc - 1);
 	node = malloc(sizeof(int) * argc - 1);
 	i = 0;
+	indexnode = 0;
 	indexnumbers = 0;
 	indexargv = 1;
 	while (i < --argc)
 	{
-		numbers[indexnumbers] = ft_atoi(argv[indexargv++]);
-		printf("Array de inteiros do atoi[%i]: Valor: %i\n", indexnumbers, numbers[indexnumbers]);
-		node[indexnode] = insert_node(hash, numbers[indexnumbers], indexnode);
+		intnumbers[indexnumbers] = ft_atoi(argv[indexargv]);
+		printf("Array de inteiros do atoi[%i]: Valor: %i\n", indexnumbers, intnumbers[indexnumbers]);
+		node[indexnode] = insert_node(stack_a, intnumbers[indexnumbers], indexnode);
 		printf("Indice na lista dos nos criados: node[%i]\n", node[indexnode]);
 		indexnode++;
 		indexnumbers++;
+		indexargv++;
 	}
+	write(1, "\n", 1);
 	// sa(hash->list);
 	// node_list *valor;
 	// valor = hash->list[0];
-	hash->list[0] = hash->list[2];
-	printf("Valor do no apos troca: %i\n", hash->list[3]->value);
+	insert_node(stack_b, 44, 0);
+	insert_node(stack_b, 55, 1);
+	int indexa = 0;
+	while(indexa < 5)
+	{
+		printf("Valores dos indices[%i] da stack_a antes do pb: %i\n", indexa, stack_a->list[indexa]->value);
+		indexa++;
+	}
+	write(1, "\n", 1);
+	int indexb = 0;
+	while(indexb < 2)
+	{
+		printf("Valores dos indices[%i] da stack_b antes do pb: %i\n", indexb, stack_b->list[indexb]->value);
+		indexb++;
+	}
+	write(1, "\n", 1);
+	pb(stack_a->list, stack_b->list);
+	indexa = 0;
+	while(indexa < 5)
+	{
+		printf("Valores dos indices[%i] da stack_a apos pb: %i\n", indexa, stack_a->list[indexa]->value);
+		indexa++;
+	}
+	write(1, "\n", 1);
+	indexb = 0;
+	while(indexb < 3)
+	{
+		printf("Valores dos indices[%i] da stack_b: %i\n", indexb, stack_b->list[indexb]->value);
+		indexb++;
+	}
+	write(1, "\n", 1);
+	// printf("Valor de stack_a->list[0] apos pb: %i\n", stack_a->list[0]->value);
 	// hash_list *hash;
 	// int key; //here must be type int, because will be some number of array
 	// int key2; //here must be type int, because will be some number of array
@@ -54,20 +90,53 @@ int main(int argc, char **argv)
 	// printf("VALOR KEY2: %s\n", ret2);
 }
 
-void	sa(node_list **list)
+void	sa(node_list **list_a)
 {
 	node_list *temp;
-	temp = list[1];
-	list[0] = list[1];
-	list[1] = temp;
+	temp = list_a[1];
+	list_a[0] = list_a[1];
+	list_a[1] = temp;
 }
 
-void	sb(node_list **list)
+void	sb(node_list **list_b)
 {
 	node_list *temp;
-	temp = list[1];
-	list[0] = list[1];
-	list[1] = temp;
+	temp = list_b[1];
+	list_b[0] = list_b[1];
+	list_b[1] = temp;
+}
+
+void	ss(node_list **list_a, node_list **list_b)
+{
+	sa(list_a);
+	sb(list_b);
+}
+
+// void	pa(node_list **list_a, node_list **list_b)
+// {
+// 	
+// }
+
+void	pb(node_list **list_a, node_list **list_b)
+{
+	printf("Rato gordo");
+	node_list **new_list_b;
+	int countb;
+	int countnew;
+	new_list_b = malloc(40);
+	countb = 1;
+	countnew = 1;
+	list_a[0]->value = 777;
+	new_list_b[0] = list_a[0];
+	while(list_b[countb])
+	{
+		new_list_b[countnew] = list_b[countb];
+		countb++;
+		countnew++;
+	}
+	list_b = new_list_b;
+	free(list_a[0]);
+	printf("Valor de countb: %i\n", countb);
 }
 
 node_list	*create_node(int number)
