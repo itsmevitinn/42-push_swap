@@ -2,7 +2,10 @@
 #include <stdio.h>
 void	create_list(node_list **stack, int value);
 node_list	*get_last(node_list *stack);
+void	rra(node_list **stack_a);
+void	print_stack_b(node_list **stack_b);
 void	sa(node_list **stack_list);
+void	print_stack_a(node_list **stack_a);
 void	ra(node_list **stack_a);
 void	sb(node_list **stack_list);
 void	insert_last(node_list **stack, node_list *new_node);
@@ -33,32 +36,44 @@ int main(int argc, char **argv)
 		indexargv++;
 	}
 	sa(stack_a);
-	node_list *rato;
-	rato = *stack_a;
-	while(rato)
-	{
-		printf("Valores dos nos da stack_a: %i\n", rato->value);
-		rato = rato->next;
-	}
-	write(1, "\n", 1);
+	print_stack_a(stack_a);
 	pb(stack_a, stack_b);
+	print_stack_a(stack_a);
+	print_stack_b(stack_b);
 	pb(stack_a, stack_b);
+	print_stack_a(stack_a);
+	print_stack_b(stack_b);
 	pa(stack_a, stack_b);
+	print_stack_b(stack_b);
+	print_stack_a(stack_a);
 	ra(stack_a);
+	print_stack_a(stack_a);
 	ra(stack_a);
-	node_list *rato2;
-	rato2 = *stack_b;
-	while(rato2)
+	print_stack_a(stack_a);
+	rra(stack_a);
+	print_stack_a(stack_a);
+}
+
+void	print_stack_a(node_list **stack_a)
+{
+	node_list *current;
+	current = *stack_a;
+	while(current)
 	{
-		printf("Valores dos nos da stack_b: %i\n", rato2->value);
-		rato2 = rato2->next;
+		printf("Valores dos nos da stack_a: %i\n", current->value);
+		current = current->next;
 	}
 	write(1, "\n", 1);
-	rato = *stack_a;
-	while(rato)
+}
+
+void	print_stack_b(node_list **stack_b)
+{
+	node_list *current;
+	current = *stack_b;
+	while(current)
 	{
-		printf("Valores dos nos da stack_a: %i\n", rato->value);
-		rato = rato->next;
+		printf("Valores dos nos da stack_b: %i\n", current->value);
+		current = current->next;
 	}
 	write(1, "\n", 1);
 }
@@ -79,13 +94,13 @@ void	swap(node_list **stack_list)
 void	sa(node_list **stack_a)
 {
 	swap(stack_a);
-	write(1, "sa\n", 3);
+	printf("sa\n");
 }
 
 void	sb(node_list **stack_b)
 {
 	swap(stack_b);
-	write(1, "sb\n", 3);
+	printf("sb\n");
 }
 
 void	ss(node_list **stack_a, node_list **stack_b)
@@ -93,14 +108,18 @@ void	ss(node_list **stack_a, node_list **stack_b)
 	sa(stack_a);
 	sb(stack_b);
 }
+void	push(node_list **sender, node_list **receiver)
+{
+	node_list *new_sender;
+	new_sender = (*sender)->next;
+	insert_first_node(receiver, *sender);
+	*sender = new_sender;
+}
 
 void	pa(node_list **stack_a, node_list **stack_b)
 {
-	node_list *next_b;
-	next_b = (*stack_b)->next;
-	insert_first_node(stack_a, *stack_b);
-	*stack_b = next_b;
-	write(1, "pb\n", 3);
+	push(stack_b, stack_a);
+	printf("pa\n");
 }
 
 void	pb(node_list **stack_a, node_list **stack_b)
@@ -109,30 +128,49 @@ void	pb(node_list **stack_a, node_list **stack_b)
 	next_a = (*stack_a)->next;
 	insert_first_node(stack_b, *stack_a);
 	*stack_a = next_a;
+	printf("pb\n");
 }
 
-void	ra(node_list **stack_a)
+void	shift_up(node_list **stack)
 {
 	node_list *first;
 	node_list *second;
 	node_list *last;
 
-	second = (*stack_a)->next;
-	first = *stack_a;
+	second = (*stack)->next;
+	first = *stack;
 	first->next = NULL;
 	last = get_last(second);
 	last->next = first;
-	*stack_a = second;
-	write(1, "ra\n", 3);
+	*stack = second;
 }
 
-void	create_list(node_list **stack, int value)
+void	shift_down(node_list **stack)
 {
-	node_list *node;
-	node = malloc(sizeof(node_list));
-	node->value = value;
-	node->next = NULL;
-	*stack = node;
+	node_list *first;
+	node_list *last;
+	first = *stack;
+	last = get_last(first);
+	last->next = NULL;
+	insert_first_node(stack, last);
+}
+
+void	ra(node_list **stack_a)
+{
+	shift_up(stack_a);
+	printf("ra\n");
+}
+
+void	rb(node_list **stack_b)
+{
+	shift_up(stack_b);
+	printf("rb\n");
+}
+
+void	rra(node_list **stack_a)
+{
+	shift_down(stack_a);
+	printf("rra\n");
 }
 
 // char	*grepvalue(hash_list *hash, int number)
@@ -155,20 +193,6 @@ void	insert_last_node(node_list **stack, int value)
 	new_node = malloc(sizeof(node_list));
 	new_node->value = value;
 	new_node->next = NULL;
-	if(*stack == NULL)
-	{
-		*stack = new_node;
-		return ;
-	}
-	temp = *stack;
-	while(temp->next != NULL)
-		temp = temp->next;
-	temp->next = new_node;
-}
-
-void	insert_last(node_list **stack, node_list *new_node)
-{
-	node_list *temp;
 	if(*stack == NULL)
 	{
 		*stack = new_node;
