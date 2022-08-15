@@ -1,5 +1,6 @@
 #include "push_swap.h"
 #include <stdio.h>
+void	ft_bubblesort(node_list **stack_a);
 void	create_list(node_list **stack, int value);
 node_list	*get_last(node_list *stack);
 void	rra(node_list **stack_a);
@@ -41,12 +42,14 @@ int main(int argc, char **argv)
 	print_stack_a(stack_a);
 	node_list *first;
 	first = *stack_a;
-	while(first)
-	{
-		if (first->value > first->next->value)
-			
-		first = first->next;
-	}
+	ft_bubblesort(stack_a);
+	// print_stack_a(stack_a);
+	// while(first)
+	// {
+	// 	if (first->value > first->next->value)
+	// 			
+	// 	first = first->next;
+	// }
 	// pb(stack_a, stack_b);
 	// print_stack_a(stack_a);
 	// print_stack_b(stack_b);
@@ -62,6 +65,46 @@ int main(int argc, char **argv)
 	// print_stack_a(stack_a);
 	// rra(stack_a);
 	// print_stack_a(stack_a);
+}
+
+void	ft_bubblesort(node_list **stack_a)
+{
+	int interrupter;
+	node_list *first;
+	node_list *temp;
+	node_list **list;
+
+	first = *stack_a;
+	temp = *stack_a;
+	
+	interrupter = 1;
+	while(interrupter)
+	{
+		interrupter = 0;
+		while(temp->next != NULL)
+		{
+			if (temp->value > temp->next->value)
+			{
+				// node_list *temp1;
+				// node_list *temp2;
+				// node_list *temp3;
+				// temp1 = temp;
+				// temp2 = temp->next;
+				// temp3 = temp2->next;
+				// temp2->next = temp1;
+				// temp1->next = temp3;
+				*list = temp;
+				sa(list);
+				// (*list)->next = temp->next;
+				interrupter = 1;	
+			}
+			else
+				temp = temp->next;
+		}
+		temp = first;
+	}
+	write(1, "bubble\n", 7);
+	print_stack_a(list);
 }
 
 void	check_errors(int *numbers)
@@ -161,6 +204,7 @@ void	sa(node_list **stack_a)
 {
 	swap(stack_a);
 	printf("sa\n");
+	print_stack_a(stack_a);
 }
 
 void	sb(node_list **stack_b)
