@@ -43,7 +43,8 @@ int main(int argc, char **argv)
 	first = *stack_a;
 	while(first)
 	{
-
+		if (first->value > first->next->value)
+			
 		first = first->next;
 	}
 	// pb(stack_a, stack_b);
