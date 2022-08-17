@@ -42,7 +42,8 @@ int main(int argc, char **argv)
 	// sa(stack_a);
 	// print_stack_a(stack_a);
 	ft_bubblesort(stack_a, stack_b);
-	// print_stack_a(stack_a);
+	print_stack_a(stack_a);
+	return (0);
 	// print_stack_b(stack_b);
 	// print_stack_a(stack_a);
 	// while(first)
@@ -85,31 +86,52 @@ int main(int argc, char **argv)
 // }
 void	ft_bubblesort(node_list **stack_a, node_list **stack_b)
 {
-	node_list **list;
-	int interrupter;
-
-	interrupter = 1;
-
-	while(interrupter)
+	while((*stack_a) != NULL)
 	{
-		list = stack_a;
-		interrupter = 0;
-		while((*list)->next != NULL)
+		if((*stack_a)->next == NULL)
 		{
-			node_list *first;
-			node_list *second;
-			first = *list;
-			second = first->next;
-			if (first->value > second->value)
-			{
-				*list = new_swap(first, second);
-				interrupter = 1;
-			}
-			list = &(*list)->next;
+			pb(stack_a, stack_b);
+			break;
 		}
+		// node_list *next;
+		// next = (*stack_a)->next;
+		if((*stack_a)->value > (*stack_a)->next->value)
+			sa(stack_a);
+		else
+			pb(stack_a, stack_b);
 	}
+	while((*stack_b) != NULL)
+		pa(stack_a, stack_b);
 	// write(1, "bubble\n", 7);
 }
+
+// void	ft_bubblesort(node_list **stack_a, node_list **stack_b)
+// {
+// 	node_list **list;
+// 	int interrupter;
+
+// 	interrupter = 1;
+
+// 	while(interrupter)
+// 	{
+// 		list = stack_a;
+// 		interrupter = 0;
+// 		while((*list)->next != NULL)
+// 		{
+// 			node_list *first;
+// 			node_list *second;
+// 			first = *list;
+// 			second = first->next;
+// 			if (first->value > second->value)
+// 			{
+// 				*list = new_swap(first, second);
+// 				interrupter = 1;
+// 			}
+// 			list = &(*list)->next;
+// 		}
+// 	}
+// 	// write(1, "bubble\n", 7);
+// }
 
 void	check_errors(int *numbers)
 {
@@ -162,7 +184,7 @@ node_list	*new_swap(node_list *node1, node_list *node2)
 	return(node2);
 }
 
-node_list	*swap(node_list **stack_list)
+void	swap(node_list **stack_list)
 {
 	node_list *first;
 	node_list *second;
@@ -173,7 +195,6 @@ node_list	*swap(node_list **stack_list)
 	second->next = first;
 	first->next = third;
 	*stack_list = second;
-	return (*stack_list);
 }
 
 void	push(node_list **sender, node_list **receiver)
@@ -220,7 +241,7 @@ void	sa(node_list **stack_a)
 {
 	swap(stack_a);
 	printf("sa\n");
-	print_stack_a(stack_a);
+	// print_stack_a(stack_a);
 }
 
 void	sb(node_list **stack_b)
@@ -248,6 +269,7 @@ void	pb(node_list **stack_a, node_list **stack_b)
 	insert_first_node(stack_b, *stack_a);
 	*stack_a = next_a;
 	printf("pb\n");
+	// print_stack_b(stack_b);
 }
 
 void	ra(node_list **stack_a)
