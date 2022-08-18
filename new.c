@@ -19,6 +19,8 @@ void check_errors(int *numbers);
 void push(node_list **stack_a, node_list **stack_b, char type);
 void swap(node_list **stack_list, char type);
 int check_order(node_list **stack);
+void reverse_rotate(node_list **stack, char type);
+
 
 int main(int argc, char **argv)
 {
@@ -114,6 +116,7 @@ int check_order(node_list **stack)
 
 void ft_bubblesort(node_list **stack_a, node_list **stack_b)
 {
+	print_stack_a(stack_a);
 	while (!check_order(stack_a))
 	{
 		while (*stack_a != NULL)
@@ -130,7 +133,7 @@ void ft_bubblesort(node_list **stack_a, node_list **stack_b)
 			else
 				push(stack_a, stack_b, 'b');
 		}
-		// print_stack_a(stack_b);
+		print_stack_b(stack_b);
 		while (*stack_b != NULL)
 		{
 			if ((*stack_b)->next == NULL)
@@ -145,7 +148,7 @@ void ft_bubblesort(node_list **stack_a, node_list **stack_b)
 			else
 				push(stack_a, stack_b, 'a');
 		}
-		// print_stack_a(stack_a);
+		print_stack_a(stack_a);
 	}
 
 	// interrupter_b = 1;
@@ -220,10 +223,13 @@ void check_errors(int *numbers)
 void print_stack_a(node_list **stack_a)
 {
 	node_list *current;
+	int i;
+
+	i = 1;
 	current = *stack_a;
 	while (current)
 	{
-		printf("Valores dos nos da stack_a: %i\n", current->value);
+		printf("Valor do %iº nó da stack_A: %i\n", i++, current->value);
 		current = current->next;
 	}
 	write(1, "\n", 1);
@@ -232,25 +238,28 @@ void print_stack_a(node_list **stack_a)
 void print_stack_b(node_list **stack_b)
 {
 	node_list *current;
+	int i;
+
+	i = 1;
 	current = *stack_b;
 	while (current)
 	{
-		printf("Valores dos nos da stack_b: %i\n", current->value);
+		printf("Valor do %iº nó da stack_B: %i\n", i++, current->value);
 		current = current->next;
 	}
 	write(1, "\n", 1);
 }
 
-node_list *new_swap(node_list *node1, node_list *node2)
-{
-	node_list *third;
-	third = node2->next;
+// node_list *new_swap(node_list *node1, node_list *node2)
+// {
+// 	node_list *third;
+// 	third = node2->next;
 
-	node2->next = node1;
-	node1->next = third;
-	write(1, "sa\n", 3);
-	return (node2);
-}
+// 	node2->next = node1;
+// 	node1->next = third;
+// 	write(1, "sa\n", 3);
+// 	return (node2);
+// }
 
 void swap(node_list **stack_list, char type)
 {
@@ -271,27 +280,24 @@ void swap(node_list **stack_list, char type)
 
 void push(node_list **stack_a, node_list **stack_b, char type)
 {
-	node_list **receiver;
-	node_list *new_sender;
+	node_list *temp_sender;
 	if (type == 'a')
 	{
-		new_sender = (*stack_b)->next;
-		receiver = stack_a;
-		insert_first_node(receiver, *stack_b);
-		*stack_b = new_sender;
+		temp_sender = (*stack_b)->next;
+		insert_first_node(stack_a, *stack_b);
+		*stack_b = temp_sender;
 		write(1, "pa\n", 3);
 	}
 	else if (type == 'b')
 	{
-		new_sender = (*stack_a)->next;
-		receiver = stack_b;
-		insert_first_node(receiver, *stack_a);
-		*stack_a = new_sender;
+		temp_sender = (*stack_a)->next;
+		insert_first_node(stack_b, *stack_a);
+		*stack_a = temp_sender;
 		write(1, "pb\n", 3);
 	}
 }
 
-void rotate(node_list **stack)
+void rotate(node_list **stack, char type)
 {
 	node_list *first;
 	node_list *second;
@@ -303,9 +309,13 @@ void rotate(node_list **stack)
 	last = get_last(second);
 	last->next = first;
 	*stack = second;
+	if (type == 'b')
+		write(1, "rb\n", 4);
+	else if (type == 'a')
+		write(1, "ra\n", 4);
 }
 
-void reverse_rotate(node_list **stack)
+void reverse_rotate(node_list **stack, char type)
 {
 	node_list *prev;
 	node_list *last;
@@ -321,6 +331,10 @@ void reverse_rotate(node_list **stack)
 	prev->next = NULL;
 	last->next = first;
 	*stack = last;
+	if (type == 'b')
+		write(1, "rrb\n", 4);
+	else if (type == 'a')
+		write(1, "rra\n", 4);
 }
 
 void ss(node_list **stack_a, node_list **stack_b)
@@ -329,40 +343,16 @@ void ss(node_list **stack_a, node_list **stack_b)
 	swap(stack_b, 'b');
 }
 
-void ra(node_list **stack_a)
-{
-	rotate(stack_a);
-	printf("ra\n");
-}
-
-void rb(node_list **stack_b)
-{
-	rotate(stack_b);
-	printf("rb\n");
-}
-
 void rr(node_list **stack_a, node_list **stack_b)
 {
-	ra(stack_a);
-	rb(stack_b);
-}
-
-void rra(node_list **stack_a)
-{
-	reverse_rotate(stack_a);
-	printf("rra\n");
-}
-
-void rrb(node_list **stack_b)
-{
-	reverse_rotate(stack_b);
-	printf("rrb\n");
+	rotate(stack_a, 'a');
+	rotate(stack_b, 'b');
 }
 
 void rrr(node_list **stack_a, node_list **stack_b)
 {
-	rra(stack_a);
-	rrb(stack_b);
+	reverse_rotate(stack_a, 'a');
+	reverse_rotate(stack_b, 'b');
 }
 
 // char	*grepvalue(hash_list *hash, int number)
