@@ -1,13 +1,12 @@
 #include "push_swap.h"
 #include <stdio.h>
-void ft_bubblesort(node_list **stack_a, node_list **stack_b);
+void ft_bubblesort(node_list **stack_a, node_list **stack_b, int len);
 node_list *new_swap(node_list *node1, node_list *node2);
 void create_list(node_list **stack, int value);
 node_list *get_last(node_list *stack);
 void rra(node_list **stack_a);
-void print_stack_b(node_list **stack_b);
 void sa(node_list **stack_list);
-void print_stack_a(node_list **stack_a);
+void print_stacks(node_list **stack_a, node_list **stack_b);
 void ra(node_list **stack_a);
 void sb(node_list **stack_list);
 void insert_last(node_list **stack, node_list *new_node);
@@ -47,7 +46,7 @@ int main(int argc, char **argv)
 	// sa(stack_a);
 	// print_stack_a(stack_a);
 	check_order(stack_a);
-	ft_bubblesort(stack_a, stack_b);
+	ft_bubblesort(stack_a, stack_b, argc - 1);
 	// print_stack_a(stack_a);
 	// print_stack_b(stack_b);
 	return (0);
@@ -91,32 +90,45 @@ int main(int argc, char **argv)
 // 			*stack_a= (*stack_a)->next;
 // 	}
 // }
-
 int check_order(node_list **stack)
 {
 	node_list *temp;
 	node_list *next;
-	int checker;
 
 	temp = *stack;
-	checker = 0;
-
+	next = (*stack)->next;
+	while(temp->next != NULL)
+	{
+		while(next)
+		{
+			if (temp->value != next->value)
+				next = next->next;	
+			else
+			{
+				write(2, "Error\n", 6);
+				exit(EXIT_FAILURE);
+			};
+		}
+		temp = temp->next;
+		next = temp->next;
+	}
+	temp = *stack;
 	while(temp->next != NULL)
 	{
 		next = temp->next;
 		if (temp->value < next->value)
-			checker++;
+			temp = temp->next;
 		else
 			return (0);
-		temp = temp->next;
 	}
-	write(2, "ERROR\n", 6); // handle this before doing bubble_sort + handle duplicated numbers
-	return (1); //exit instead return when ordened
+	write(2, "Error\n", 6);
+	exit (EXIT_FAILURE);
 }
 
-void ft_bubblesort(node_list **stack_a, node_list **stack_b)
+void ft_bubblesort(node_list **stack_a, node_list **stack_b, int len)
 {
-	print_stack_a(stack_a);
+	pick_small(stack_a);
+
 	while (!check_order(stack_a))
 	{
 		while (*stack_a != NULL)
@@ -133,7 +145,6 @@ void ft_bubblesort(node_list **stack_a, node_list **stack_b)
 			else
 				push(stack_a, stack_b, 'b');
 		}
-		print_stack_b(stack_b);
 		while (*stack_b != NULL)
 		{
 			if ((*stack_b)->next == NULL)
@@ -148,7 +159,14 @@ void ft_bubblesort(node_list **stack_a, node_list **stack_b)
 			else
 				push(stack_a, stack_b, 'a');
 		}
-		print_stack_a(stack_a);
+		print_stacks(stack_a, stack_b);
+	}
+
+	void	pick_small(node_list **stack_a)
+	{
+		while(*stack_a && *stack_a->value < (*stack_a)->next->value)
+			*stack_a = (*stack_a)->next;
+		printf("Smallest value in stack: %i\n", (*stack_a)->value);
 	}
 
 	// interrupter_b = 1;
@@ -220,46 +238,30 @@ void check_errors(int *numbers)
 	}
 }
 
-void print_stack_a(node_list **stack_a)
+void print_stacks(node_list **stack_a, node_list **stack_b)
 {
-	node_list *current;
-	int i;
+	node_list *current_a;
+	node_list *current_b;
 
-	i = 1;
-	current = *stack_a;
-	while (current)
-	{
-		printf("Valor do %iº nó da stack_A: %i\n", i++, current->value);
-		current = current->next;
-	}
+	current_a = *stack_a;
+	current_b = *stack_b;
 	write(1, "\n", 1);
-}
-
-void print_stack_b(node_list **stack_b)
-{
-	node_list *current;
-	int i;
-
-	i = 1;
-	current = *stack_b;
-	while (current)
+	while (current_a || current_b)
 	{
-		printf("Valor do %iº nó da stack_B: %i\n", i++, current->value);
-		current = current->next;
+		if(current_a)
+		{
+			printf("%i ", current_a->value);
+			current_a = current_a->next;	
+		}
+		if(current_b)
+		{
+			printf("%i", current_b->value);
+			current_b = current_b->next;
+		}
+		printf("\n");
 	}
-	write(1, "\n", 1);
+	printf("- -\na b\n");
 }
-
-// node_list *new_swap(node_list *node1, node_list *node2)
-// {
-// 	node_list *third;
-// 	third = node2->next;
-
-// 	node2->next = node1;
-// 	node1->next = third;
-// 	write(1, "sa\n", 3);
-// 	return (node2);
-// }
 
 void swap(node_list **stack_list, char type)
 {
