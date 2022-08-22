@@ -1,17 +1,20 @@
 #include "push_swap.h"
 #include <stdio.h>
 
-void pick_small(node_list **stack_a);
+int check_order(node_list **stack);
+void rotate(node_list **stack, char type);
+int find_position(node_list **stack, int smallest);
+int pick_small(node_list **stack);
 void ft_bubblesort(node_list **stack_a, node_list **stack_b, int len);
 node_list *get_last(node_list *stack);
 void print_stacks(node_list **stack_a, node_list **stack_b);
 void insert_last_node(node_list **stack, int value);
 void insert_first_node(node_list **stack, node_list *first);
-void check_errors(int *numbers);
 void push(node_list **stack_a, node_list **stack_b, char type);
 void swap(node_list **stack_list, char type);
-int check_order(node_list **stack);
+int check_errors(node_list **stack);
 void reverse_rotate(node_list **stack, char type);
+void ft_mergesort(node_list **stack_a, node_list **stack_b, int len);
 
 int main(int argc, char **argv)
 {
@@ -35,18 +38,126 @@ int main(int argc, char **argv)
 		indexnumbers++;
 		indexargv++;
 	}
-	check_order(stack_a);
-	// ft_mergesort(stack_a, stack_b, argc - 1)
-	ft_bubblesort(stack_a, stack_b, argc - 1);
+	check_errors(stack_a);
+	ft_mergesort(stack_a, stack_b, argc - 1);
+	// print_stacks(stack_a, stack_b);
+	// ft_bubblesort(stack_a, stack_b, argc - 1);
 	return (0);
 }
 
-// void ft_mergesort(node_list **stack_a, node_list **stack_b, int len)
-// {
+void ft_mergesort(node_list **stack_a, node_list **stack_b, int len)
+{
+	node_list *second;
+	int small_value;
+	int small_a;
+	int fill_b;
+	int position;
+	int position_a;
+	int half;
+	fill_b = 1;
+	half = len/2;
+	while (*stack_a != NULL && fill_b <= half)
+	// while (*stack_a != NULL)
+	{
+		small_value = pick_small(stack_a);
+		position = find_position(stack_a, small_value);
+		while (position > half)
+		{
+			if (position == len)
+			{
+				reverse_rotate(stack_a, 'a');
+				push(stack_a, stack_b, 'b');
+				len--;
+				break;
+			}
+			reverse_rotate(stack_a, 'a');
+			position++;
+		}
+		while(position <= half)
+		{
+			if (position == 1)
+			{
+				push(stack_a, stack_b, 'b');
+				len--;
+				break;
+			}
+			rotate(stack_a, 'a');
+			position--;
+		}
+		fill_b++;
+	}
+	// print_stacks(stack_a, stack_b);
+	while (*stack_a != NULL) //bubble with stack_a
+	{
+		if ((*stack_a)->next == NULL)
+		{
+			push(stack_a, stack_b, 'b');
+			break;
+		}
+		node_list *next;
+		next = (*stack_a)->next;
+		if ((*stack_a)->value > next->value)
+			swap(stack_a, 'a');
+		else
+			push(stack_a, stack_b, 'b');
+	}
+	// while (!check_order(stack_a))
+	// {
+	// 	small_a = pick_small(stack_a);
+	// 	position_a = find_position(stack_a, small_a);
+	// 	// printf("menor valor: %i\n", small_a);
+	// 	// printf("posicao menor: %i\n", position_a);
+	// 	second = (*stack_a)->next;
+	// 	if((*stack_a)->value > second->value)
+	// 		rotate(stack_a, 'a');
+	// 	else
+	// 	{
+	// 		swap(stack_a, 'a');
+	// 		rotate(stack_a, 'a');
+	// 	}
+	// }
+	while(*stack_b != NULL)
+		push(stack_a, stack_b, 'a');
+}
 
-// }
+int find_position(node_list **stack, int smallest)
+{
+	node_list *temp;
+	int position;
+
+	temp = *stack;
+	position = 0;
+	while(temp)
+	{
+		if (temp->value == smallest)
+		{
+			position++;
+			break;
+		}
+		position++;
+		temp = temp->next;
+	}
+	return (position);
+}
 
 int check_order(node_list **stack)
+{
+	node_list *temp;
+	node_list *next;
+
+	temp = *stack;
+	while (temp->next != NULL)
+	{
+		next = temp->next;
+		if (temp->value < next->value)
+			temp = temp->next;
+		else
+			return (0);
+	}
+	return(1);
+}
+
+int check_errors(node_list **stack)
 {
 	node_list *temp;
 	node_list *next;
@@ -61,7 +172,7 @@ int check_order(node_list **stack)
 				next = next->next;
 			else
 			{
-				write(2, "Error\n", 6);
+				write(2, "Numeros duplicados\n", 19);
 				exit(EXIT_FAILURE);
 			};
 		}
@@ -69,16 +180,17 @@ int check_order(node_list **stack)
 		next = temp->next;
 	}
 	temp = *stack;
-	while (temp->next != NULL)
-	{
-		next = temp->next;
-		if (temp->value < next->value)
-			temp = temp->next;
-		else
-			return (0);
-	}
-	write(2, "Error\n", 6);
-	exit(EXIT_FAILURE);
+	// while (temp->next != NULL)
+	// {
+	// 	next = temp->next;
+	// 	if (temp->value < next->value)
+	// 		temp = temp->next;
+	// 	else
+	// 		return (0);
+	// }
+	// write(2, "Stack ordenada\n", 15);
+	// exit(EXIT_FAILURE);
+	return (0);
 }
 
 void ft_bubblesort(node_list **stack_a, node_list **stack_b, int len)
@@ -119,7 +231,7 @@ void ft_bubblesort(node_list **stack_a, node_list **stack_b, int len)
 	}
 }
 
-void pick_small(node_list **stack)
+int pick_small(node_list **stack)
 {
 	node_list *temp;
 	int smallest;
@@ -137,8 +249,7 @@ void pick_small(node_list **stack)
 		}
 		temp = temp->next;
 	}
-	printf("Posicao do no: %i\n", counter);
-	printf("Smallest value in stack: %i\n", smallest);
+	return (smallest);
 }
 
 void print_stacks(node_list **stack_a, node_list **stack_b)
