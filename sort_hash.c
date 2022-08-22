@@ -1,10 +1,10 @@
 #include "push_swap.h"
 #include <stdio.h>
 
-hash_list *create_stack_list(int len_number)
+index_list *create_stack_list(int len_number)
 {
 	// node_list *node;
-	hash_list *create;
+	index_list *create;
 	int i;
 
 	// node = malloc(sizeof(node_list));
@@ -12,23 +12,22 @@ hash_list *create_stack_list(int len_number)
 	// node->value = "Arroz";
 	// node->next = NULL;
 	
-	create = (hash_list *)malloc(sizeof(hash_list));
-	create->index_size = len_number;
-	create->list = (node_list **)malloc(create->index_size * sizeof(node_list *));
+	create = (index_list *)malloc(sizeof(index_list));
+	create->list_size = len_number;
+	create->list = (node_list **)malloc(create->list_size * sizeof(node_list *));
 
 	i = 0;
-
-	while (i < create->index_size)
+	while (i < create->list_size)
 	{
 		create->list[i] = NULL;
 		i++;
 	}
-	printf("Tamanho da hashtable: %i\n", create->index_size);
+	printf("Tamanho da indextable: %i\n", create->list_size);
 	return (create);
 }
 
-int	do_hash(int number, hash_list *size_hash) // here need to have *hash as parameter, to do hash dinamically
-{
+//int	do_hash(int number, hash_list *size_hash) // here need to have *hash as parameter, to do hash dinamically
+//{
 	// int random_hash;
 	// int i;
 
@@ -56,8 +55,8 @@ int	do_hash(int number, hash_list *size_hash) // here need to have *hash as para
 	// 	total += size_hash->index_size;
 	// 	return (total);
 	// }
-	return (number % size_hash->index_size);  // return must do module accordingly to hash size
-}
+	//return (number % size_hash->index_size);  // return must do module accordingly to hash size
+//}
 // int main(void)
 // {
 // 	int number[] = {-2, -5, 7, 10, 11, 20, 100, 580, 581, 'a'};
