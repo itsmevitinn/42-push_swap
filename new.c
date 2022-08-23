@@ -1,10 +1,12 @@
 #include "push_swap.h"
 #include <stdio.h>
 
+int pick_smallest(node_list **stack, int len);
+int count_len(node_list **stack);
+int pick_highest(node_list **stack, int len);
 int check_order(node_list **stack);
 void rotate(node_list **stack, char type);
 int find_position(node_list **stack, int smallest);
-int pick_small(node_list **stack);
 void ft_bubblesort(node_list **stack_a, node_list **stack_b, int len);
 node_list *get_last(node_list *stack);
 void print_stacks(node_list **stack_a, node_list **stack_b);
@@ -49,58 +51,80 @@ void ft_mergesort(node_list **stack_a, node_list **stack_b, int len)
 {
 	node_list *second;
 	int small_value;
-	int small_a;
-	int fill_b;
+	int highest_value;
+	int highest_position;
 	int position;
-	int position_a;
+	int fill_b;
 	int half;
+	int half_a;
+	int len_a;
+
 	fill_b = 1;
 	half = len/2;
 	while (*stack_a != NULL && fill_b <= half)
 	// while (*stack_a != NULL)
 	{
-		small_value = pick_small(stack_a);
+		small_value = pick_smallest(stack_a, len);
 		position = find_position(stack_a, small_value);
-		while (position > half)
-		{
-			if (position == len)
-			{
-				reverse_rotate(stack_a, 'a');
-				push(stack_a, stack_b, 'b');
-				len--;
-				break;
-			}
-			reverse_rotate(stack_a, 'a');
-			position++;
-		}
-		while(position <= half)
-		{
-			if (position == 1)
-			{
-				push(stack_a, stack_b, 'b');
-				len--;
-				break;
-			}
-			rotate(stack_a, 'a');
-			position--;
-		}
+		printf("Menor valor: %i\n", small_value);
+		printf("posicao menor valor: %i\n", position);
+		len--;
+		// while (position > half)
+		// {
+		// 	if (position == len)
+		// 	{
+		// 		reverse_rotate(stack_a, 'a');
+		// 		push(stack_a, stack_b, 'b');
+		// 		len--;
+		// 		break;
+		// 	}
+		// 	reverse_rotate(stack_a, 'a');
+		// 	position++;
+		// }
+		// while(position <= half)
+		// {
+		// 	if (position == 1)
+		// 	{
+		// 		push(stack_a, stack_b, 'b');
+		// 		len--;
+		// 		break;
+		// 	}
+		// 	rotate(stack_a, 'a');
+		// 	position--;
+		// }
 		fill_b++;
 	}
-	// print_stacks(stack_a, stack_b);
-	while (*stack_a != NULL) //bubble with stack_a
-	{
-		if ((*stack_a)->next == NULL)
-		{
-			push(stack_a, stack_b, 'b');
-			break;
-		}
-		node_list *next;
-		next = (*stack_a)->next;
-		if ((*stack_a)->value > next->value)
-			swap(stack_a, 'a');
-		else
-			push(stack_a, stack_b, 'b');
-	}
+	// len_a = count_len(stack_a);
+	// half_a = len_a/2;
+	// while (*stack_a != NULL)
+	// {
+	// 	highest_value = pick_smallest(stack_a, len_a);
+	// 	highest_position = find_position(stack_a, highest_value);
+	// 	while (highest_position > half_a)
+	// 	{
+	// 		if (highest_position == len_a)
+	// 		{
+	// 			reverse_rotate(stack_a, 'a');
+	// 			push(stack_a, stack_b, 'b');
+	// 			len_a--;
+	// 			break;
+	// 		}
+	// 		reverse_rotate(stack_a, 'a');
+	// 		highest_position++;
+	// 	}
+	// 	while(highest_position <= half_a)
+	// 	{
+	// 		if (highest_position == 1)
+	// 		{
+	// 			push(stack_a, stack_b, 'b');
+	// 			len_a--;
+	// 			break;
+	// 		}
+	// 		rotate(stack_a, 'a');
+	// 		highest_position--;
+	// 	}
+	// }
+
 	// while (!check_order(stack_a))
 	// {
 	// 	small_a = pick_small(stack_a);
@@ -116,11 +140,11 @@ void ft_mergesort(node_list **stack_a, node_list **stack_b, int len)
 	// 		rotate(stack_a, 'a');
 	// 	}
 	// }
-	while(*stack_b != NULL)
-		push(stack_a, stack_b, 'a');
+	// while(*stack_b != NULL)
+	// 	push(stack_a, stack_b, 'a');
 }
 
-int find_position(node_list **stack, int smallest)
+int find_position(node_list **stack, int value)
 {
 	node_list *temp;
 	int position;
@@ -129,7 +153,7 @@ int find_position(node_list **stack, int smallest)
 	position = 0;
 	while(temp)
 	{
-		if (temp->value == smallest)
+		if (temp->value == value)
 		{
 			position++;
 			break;
@@ -195,8 +219,6 @@ int check_errors(node_list **stack)
 
 void ft_bubblesort(node_list **stack_a, node_list **stack_b, int len)
 {
-	pick_small(stack_a);
-
 	while (!check_order(stack_a))
 	{
 		while (*stack_a != NULL)
@@ -227,20 +249,45 @@ void ft_bubblesort(node_list **stack_a, node_list **stack_b, int len)
 			else
 				push(stack_a, stack_b, 'a');
 		}
-		print_stacks(stack_a, stack_b);
 	}
 }
 
-int pick_small(node_list **stack)
+int pick_highest(node_list **stack, int len)
+{
+	node_list *temp;
+	int highest;
+	int counter;
+	int limiter;
+
+	limiter = 0;
+	counter = 0;
+	temp = *stack;
+	highest = -2147483648;
+	while (temp != NULL && limiter < len)
+	{
+		if (highest < temp->value)
+		{
+			highest = temp->value;
+			counter++;
+		}
+		temp = temp->next;
+		limiter++;
+	}
+	return (highest);
+}
+
+int pick_smallest(node_list **stack, int len)
 {
 	node_list *temp;
 	int smallest;
 	int counter;
+	int limiter;
 
+	limiter = 0;
 	counter = 0;
 	temp = *stack;
 	smallest = 2147483647;
-	while (temp != NULL)
+	while (temp != NULL && limiter < len)
 	{
 		if (smallest > temp->value)
 		{
@@ -248,6 +295,7 @@ int pick_small(node_list **stack)
 			counter++;
 		}
 		temp = temp->next;
+		limiter++;
 	}
 	return (smallest);
 }
@@ -402,4 +450,19 @@ node_list *get_last(node_list *stack)
 	while (current->next != NULL)
 		current = current->next;
 	return (current);
+}
+
+int count_len(node_list **stack)
+{
+	node_list *temp;
+	int len;
+
+	temp = *stack;
+	len = 0;
+	while(temp)
+	{
+		len++;
+		temp = temp->next;
 	}
+	return (len);
+}
