@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 int pick_smallest(node_list **stack, int len);
+int get_pivot(node_list **stack);
 int count_len(node_list **stack);
 int pick_highest(node_list **stack, int len);
 int check_order(node_list **stack);
@@ -49,50 +50,66 @@ int main(int argc, char **argv)
 
 void ft_mergesort(node_list **stack_a, node_list **stack_b, int len)
 {
-	node_list *second;
+	// node_list *second;
 	int small_value;
-	int highest_value;
-	int highest_position;
-	int position;
-	int fill_b;
+	// int highest_value;
+	// int highest_position;
 	int half;
-	int half_a;
-	int len_a;
+	int pivot;
+	int position_pivot;
+	int smallest_position;
 
-	fill_b = 1;
-	half = len/2;
-	while (*stack_a != NULL && fill_b <= half)
-	// while (*stack_a != NULL)
+	while (!check_order(stack_a))
 	{
-		small_value = pick_smallest(stack_a, len);
-		position = find_position(stack_a, small_value);
-		printf("Menor valor: %i\n", small_value);
-		printf("posicao menor valor: %i\n", position);
-		len--;
-		// while (position > half)
-		// {
-		// 	if (position == len)
-		// 	{
-		// 		reverse_rotate(stack_a, 'a');
-		// 		push(stack_a, stack_b, 'b');
-		// 		len--;
-		// 		break;
-		// 	}
-		// 	reverse_rotate(stack_a, 'a');
-		// 	position++;
-		// }
-		// while(position <= half)
-		// {
-		// 	if (position == 1)
-		// 	{
-		// 		push(stack_a, stack_b, 'b');
-		// 		len--;
-		// 		break;
-		// 	}
-		// 	rotate(stack_a, 'a');
-		// 	position--;
-		// }
-		fill_b++;
+		pivot = get_pivot(stack_a);
+		while((*stack_a)->value != pivot)
+		{
+			len = count_len(stack_a);
+			half = len/2;
+			small_value = pick_smallest(stack_a, len);
+			position_pivot = find_position(stack_a, pivot);
+			if(pivot == small_value && position_pivot == len)
+			{
+				reverse_rotate(stack_a, 'a');
+				push(stack_a, stack_b, 'b');
+				break; // or return (0);
+			}
+			else if (pivot == small_value && position_pivot != len)
+			{
+				while((*stack_a)->value != pivot)
+				{
+					if ((*stack_a)->value > pivot)
+						rotate(stack_a, 'a');
+				}
+				break; // or return (0);
+			}
+			smallest_position = find_position(stack_a, small_value);
+			while (smallest_position > half)
+			{
+				if (smallest_position == len)
+				// if (get_pivot() == len)
+				{
+					reverse_rotate(stack_a, 'a');
+					push(stack_a, stack_b, 'b');
+					// len--;
+					break;
+				}
+				reverse_rotate(stack_a, 'a');
+				smallest_position++;
+			}
+			while(smallest_position <= half)
+			{
+				// if ((*stack_a)->value == small_value)
+				if (smallest_position == 1)
+				{
+					push(stack_a, stack_b, 'b');
+					// len--;
+					break;
+				}
+				rotate(stack_a, 'a');
+				smallest_position--;
+			}
+		}
 	}
 	// len_a = count_len(stack_a);
 	// half_a = len_a/2;
@@ -140,8 +157,8 @@ void ft_mergesort(node_list **stack_a, node_list **stack_b, int len)
 	// 		rotate(stack_a, 'a');
 	// 	}
 	// }
-	// while(*stack_b != NULL)
-	// 	push(stack_a, stack_b, 'a');
+	while(*stack_b != NULL)
+		push(stack_a, stack_b, 'a');
 }
 
 int find_position(node_list **stack, int value)
@@ -441,6 +458,15 @@ void insert_first_node(node_list **stack, node_list *first)
 {
 	first->next = *stack;
 	*stack = first;
+}
+
+int get_pivot(node_list **stack)
+{
+	node_list *current;
+	current = *stack;
+	while (current->next != NULL)
+		current = current->next;
+	return (current->value);
 }
 
 node_list *get_last(node_list *stack)
