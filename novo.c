@@ -1,6 +1,9 @@
 #include "push_swap.h"
 #include <stdio.h>
 
+void	sort_3(node_list **stack_a, int len);
+void	get_index(node_list **stack_a);
+void	sort_temp(node_list **temp);
 int pick_smallest(node_list **stack, int len);
 int get_pivot(node_list **stack);
 int count_len(node_list **stack);
@@ -27,7 +30,7 @@ int main(int argc, char **argv)
 	int indexargv;
 	int indexnode;
 	int indexnumbers;
-	
+
 	indexnode = 0;
 	stack_a = malloc(sizeof(node_list) * argc - 1);
 	stack_b = malloc(sizeof(node_list) * argc - 1);
@@ -42,10 +45,44 @@ int main(int argc, char **argv)
 		indexargv++;
 	}
 	check_errors(stack_a);
-	ft_mergesort(stack_a, stack_b, argc - 1);
+	if ((argc - 1)  == 3)
+		sort_3(stack_a, argc - 1);
+	get_index(stack_a);
+	// ft_mergesort(stack_a, stack_b, argc - 1);
 	print_stacks(stack_a, stack_b);
 	// ft_bubblesort(stack_a, stack_b, argc - 1);
 	return (0);
+}
+
+void	sort_3(node_list **stack_a, int len)
+{
+	int highest_value;
+	int highest_position;
+	int smallest_value;
+	int smallest_position;
+	while(!check_order(stack_a))
+	{
+		highest_value = pick_highest(stack_a, len);
+		highest_position = find_position(stack_a, highest_value);
+		smallest_value = pick_smallest(stack_a, len);
+		smallest_position = find_position(stack_a, smallest_value);
+		if (highest_position == 2 && smallest_position == 1)
+		{
+			reverse_rotate(stack_a, 'a');
+			swap(stack_a, 'a');
+		}
+		else if (highest_position == 3 && smallest_position == 2)
+			swap(stack_a, 'a');
+		else if (highest_position == 2 && smallest_position == 3)
+			reverse_rotate(stack_a, 'a');
+		else if (highest_position == 1 && smallest_position == 2)
+			rotate(stack_a, 'a');
+		else if (highest_position == 1 && smallest_position == 3)
+		{
+			rotate(stack_a, 'a');
+			swap(stack_a, 'a');
+		}
+	}
 }
 
 void ft_mergesort(node_list **stack_a, node_list **stack_b, int len)
@@ -58,7 +95,8 @@ void ft_mergesort(node_list **stack_a, node_list **stack_b, int len)
 	int pivot;
 	int position_pivot;
 	int smallest_position;
-
+	
+	get_index(stack_a);
 	while (!check_order(stack_a))
 	{
 		pivot = get_pivot(stack_a);
@@ -220,7 +258,7 @@ int check_errors(node_list **stack)
 		temp = temp->next;
 		next = temp->next;
 	}
-	temp = *stack;
+	// temp = *stack;
 	// while (temp->next != NULL)
 	// {
 	// 	next = temp->next;
@@ -330,11 +368,13 @@ void print_stacks(node_list **stack_a, node_list **stack_b)
 		if (current_a)
 		{
 			printf("%i ", current_a->value);
+			printf("index -> %i ", current_a->index);
 			current_a = current_a->next;
 		}
 		if (current_b)
 		{
 			printf("%i", current_b->value);
+			printf("index -> %i ", current_b->index);
 			current_b = current_b->next;
 		}
 		printf("\n");
@@ -376,6 +416,26 @@ void push(node_list **stack_a, node_list **stack_b, char type)
 		*stack_a = temp_sender;
 		write(1, "pb\n", 3);
 	}
+}
+
+void	sort_temp(node_list **temp)
+{
+	node_list **temp_b;
+	node_list *next;
+	int small_value;
+	int len;
+
+	temp_b = malloc(sizeof(node_list *));
+	while(*temp != NULL)
+	{
+		len = count_len(temp);
+		small_value = pick_smallest(temp, len);
+		while((*temp)->value != small_value)
+			rotate(temp, 'a');
+		push(temp, temp_b, 'b');
+	}
+	while(*temp_b != NULL)
+		push(temp, temp_b, 'a');
 }
 
 void rotate(node_list **stack, char type)
@@ -491,4 +551,52 @@ int count_len(node_list **stack)
 		temp = temp->next;
 	}
 	return (len);
+}
+
+// void	sort_temp(node_list **temp)
+// {
+// 	node_list **temp_b;
+// 	int smallest_value;
+// 	int len;
+
+// 	temp_b = malloc(sizeof(node_list *));
+// 	while(*temp)
+// 	{
+// 		len = count_len(temp);
+// 		smallest_value = pick_smallest(temp, len);
+// 		while((*temp)->value != smallest_value)
+// 			rotate(temp, 'a');
+// 		push(temp, temp_b, 'b');
+// 	}
+// 	while(*temp_b)
+// 		push(temp, temp_b, 'a');
+// }
+
+void	get_index4(node_list **stack_a)
+{
+	node_list **sorted_stack;
+	node_list *first;
+	node_list **offset;
+	int i;
+	int len;
+
+	offset = stack_a;
+	sorted_stack = stack_a;
+	sort_temp(sorted_stack);
+	first = *offset;
+	len = count_len(stack_a);
+	i = 1;
+
+	while(i <= len)
+	{
+		if ((*sorted_stack)->value == (*offset)->value)
+		{
+			(*offset)->index = i;
+			*sorted_stack = (*sorted_stack)->next;
+			*offset = first;
+			i++;
+		}
+		*offset = (*offset)->next;
+	}
+	*stack_a = *offset;
 }
