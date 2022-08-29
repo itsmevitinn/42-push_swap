@@ -1,6 +1,11 @@
 #include "push_swap.h"
 #include <stdio.h>
 
+void	sort_values(int *array);
+void sort_5(node_list **stack_a, node_list **stack_b, int len);
+void print_stack_a(node_list **stack_a);
+void	radix_sort(node_list **stack_a, node_list **stack_b);
+int get_highest_bit(node_list **stack);
 void sort_3(node_list **stack_a);
 void get_index(node_list **stack_a);
 void sort_temp(node_list **temp);
@@ -46,11 +51,17 @@ int main(int argc, char **argv)
 	}
 	check_errors(stack_a);
 	if ((argc - 1) == 3)
+	{
 		sort_3(stack_a);
-	// get_index(stack_a);
-	ft_mergesort(stack_a, stack_b, argc - 1);
-	// print_stacks(stack_a, stack_b);
-	// ft_bubblesort(stack_a, stack_b, argc - 1);
+		exit(EXIT_SUCCESS);
+	}
+	else if ((argc - 1) == 5)
+	{
+		sort_5(stack_a, stack_b, argc - 1);
+		exit(EXIT_SUCCESS);
+	}
+	get_index(stack_a);
+	radix_sort(stack_a, stack_b);
 	return (0);
 }
 
@@ -86,13 +97,36 @@ void sort_3(node_list **stack_a)
 	}
 }
 
-void ft_mergesort(node_list **stack_a, node_list **stack_b, int len)
+int get_highest_bit(node_list **stack)
+{
+	node_list *temp;
+	int highest;
+	int bits;
+	int size;
+
+	bits = 0;
+	temp = *stack;
+	highest = -2147483648;
+	while (temp != NULL)
+	{
+		if (highest < temp->value)
+			highest = temp->value;
+		temp = temp->next;
+	}
+	while(highest >> bits != 0)
+		bits++;
+	return (bits);
+}
+
+void sort_5(node_list **stack_a, node_list **stack_b, int len)
 {
 	int small_value;
 	int smallest_position;
 	int half;
+	int counter;
 
-	while (*stack_a != NULL && len > 3)
+	counter = 0;
+	while (counter < 2)
 	{
 		half = len / 2;
 		small_value = pick_smallest(stack_a, len);
@@ -120,125 +154,41 @@ void ft_mergesort(node_list **stack_a, node_list **stack_b, int len)
 			rotate(stack_a, 'a');
 			smallest_position--;
 		}
+		counter++;
 	}
-	sort_3(stack_a);
+	if (!check_order(stack_a))
+		sort_3(stack_a);
 	while (*stack_b != NULL)
 		push(stack_a, stack_b, 'a');
 }
 
-// void ft_mergesort(node_list **stack_a, node_list **stack_b, int len)
-// {
-// 	// node_list *second;
-// 	int small_value;
-// 	// int highest_value;
-// 	// int highest_position;
-// 	int half;
-// 	int pivot;
-// 	int position_pivot;
-// 	int smallest_position;
+void	radix_sort(node_list **stack_a, node_list **stack_b)
+{
+	int box;
+	int highest_bit;
+	int run_numbers;
+	int next_bit;
+	int len;
 
-// 	// get_index(stack_a);
-// 	while (!check_order(stack_a) && len != 3)
-// 	{
-// 		pivot = get_pivot(stack_a);
-// 		while((*stack_a)->value != pivot)
-// 		{
-// 			len = count_len(stack_a);
-// 			half = len/2;
-// 			small_value = pick_smallest(stack_a, len);
-// 			// position_pivot = find_position(stack_a, pivot);
-// 			// if(pivot == small_value && position_pivot == len)
-// 			// {
-// 			// 	reverse_rotate(stack_a, 'a');
-// 			// 	push(stack_a, stack_b, 'b');
-// 			// 	break; // or return (0);
-// 			// }
-// 			// else if (pivot == small_value && position_pivot != len)
-// 			// {
-// 			// 	while((*stack_a)->value != pivot)
-// 			// 	{
-// 			// 		if ((*stack_a)->value > pivot)
-// 			// 			rotate(stack_a, 'a');
-// 			// 	}
-// 			// 	break; // or return (0);
-// 			// }
-// 			smallest_position = find_position(stack_a, small_value);
-// 			while (smallest_position > half)
-// 			{
-// 				if (smallest_position == len)
-// 				// if (get_pivot() == len)
-// 				{
-// 					reverse_rotate(stack_a, 'a');
-// 					push(stack_a, stack_b, 'b');
-// 					len--;
-// 					// break;
-// 				}
-// 				reverse_rotate(stack_a, 'a');
-// 				smallest_position++;
-// 			}
-// 			while(smallest_position <= half)
-// 			{
-// 				// if ((*stack_a)->value == small_value)
-// 				if (smallest_position == 1)
-// 				{
-// 					push(stack_a, stack_b, 'b');
-// 					len--;
-// 					// break;
-// 				}
-// 				rotate(stack_a, 'a');
-// 				smallest_position--;
-// 			}
-// 		}
-// 	}
-// 	// len_a = count_len(stack_a);
-// 	// half_a = len_a/2;
-// 	// while (*stack_a != NULL)
-// 	// {
-// 	// 	highest_value = pick_smallest(stack_a, len_a);
-// 	// 	highest_position = find_position(stack_a, highest_value);
-// 	// 	while (highest_position > half_a)
-// 	// 	{
-// 	// 		if (highest_position == len_a)
-// 	// 		{
-// 	// 			reverse_rotate(stack_a, 'a');
-// 	// 			push(stack_a, stack_b, 'b');
-// 	// 			len_a--;
-// 	// 			break;
-// 	// 		}
-// 	// 		reverse_rotate(stack_a, 'a');
-// 	// 		highest_position++;
-// 	// 	}
-// 	// 	while(highest_position <= half_a)
-// 	// 	{
-// 	// 		if (highest_position == 1)
-// 	// 		{
-// 	// 			push(stack_a, stack_b, 'b');
-// 	// 			len_a--;
-// 	// 			break;
-// 	// 		}
-// 	// 		rotate(stack_a, 'a');
-// 	// 		highest_position--;
-// 	// 	}
-// 	// }
-
-// 	// while (!check_order(stack_a))
-// 	// {
-// 	// 	small_a = pick_small(stack_a);
-// 	// 	position_a = find_position(stack_a, small_a);
-// 	// 	// printf("menor valor: %i\n", small_a);
-// 	// 	// printf("posicao menor: %i\n", position_a);
-// 	// 	second = (*stack_a)->next;
-// 	// 	if((*stack_a)->value > second->value)
-// 	// 		rotate(stack_a, 'a');
-// 	// 	else
-// 	// 	{
-// 	// 		swap(stack_a, 'a');
-// 	// 		rotate(stack_a, 'a');
-// 	// 	}
-// 	// }
-// 	while(*stack_b != NULL)
-// 		push(stack_a, stack_b, 'a');
-// }
+	next_bit = 0;
+	highest_bit = get_highest_bit(stack_a);
+	while(next_bit < highest_bit)
+	{
+		len = count_len(stack_a);
+		run_numbers = 0;
+		while(run_numbers < len)
+		{
+			if ((((*stack_a)->index >> next_bit) & 1) == 1)
+				rotate(stack_a, 'a');
+			else
+				push(stack_a, stack_b, 'b');
+			run_numbers++;
+		}
+		while(*stack_b != NULL)
+			push(stack_a, stack_b, 'a');
+		next_bit++;
+	}
+}
 
 int find_position(node_list **stack, int value)
 {
@@ -299,17 +249,17 @@ int check_errors(node_list **stack)
 		temp = temp->next;
 		next = temp->next;
 	}
-	// temp = *stack;
-	// while (temp->next != NULL)
-	// {
-	// 	next = temp->next;
-	// 	if (temp->value < next->value)
-	// 		temp = temp->next;
-	// 	else
-	// 		return (0);
-	// }
-	// write(2, "Stack ordenada\n", 15);
-	// exit(EXIT_FAILURE);
+	temp = *stack;
+	while (temp->next != NULL)
+	{
+		next = temp->next;
+		if (temp->value < next->value)
+			temp = temp->next;
+		else
+			return (0);
+	}
+	write(2, "Error\n", 6);
+	exit(EXIT_FAILURE);
 	return (0);
 }
 
@@ -409,11 +359,13 @@ void print_stacks(node_list **stack_a, node_list **stack_b)
 		if (current_a)
 		{
 			printf("%i ", current_a->value);
+			printf("index: %i ", current_a->index);
 			current_a = current_a->next;
 		}
 		if (current_b)
 		{
 			printf("%i", current_b->value);
+			printf("index: %i ", current_b->index);
 			current_b = current_b->next;
 		}
 		printf("\n");
@@ -433,9 +385,9 @@ void swap(node_list **stack_list, char type)
 	first->next = third;
 	*stack_list = second;
 	if (type == 'a')
-		write(1, "sa\n", 3);
+		printf("sa\n");
 	else
-		write(1, "sb\n", 3);
+		printf("sb\n");
 }
 
 void push(node_list **stack_a, node_list **stack_b, char type)
@@ -446,14 +398,14 @@ void push(node_list **stack_a, node_list **stack_b, char type)
 		temp_sender = (*stack_b)->next;
 		insert_first_node(stack_a, *stack_b);
 		*stack_b = temp_sender;
-		write(1, "pa\n", 3);
+		printf("pa\n");
 	}
 	else if (type == 'b')
 	{
 		temp_sender = (*stack_a)->next;
 		insert_first_node(stack_b, *stack_a);
 		*stack_a = temp_sender;
-		write(1, "pb\n", 3);
+		printf("pb\n");
 	}
 }
 
@@ -490,9 +442,9 @@ void rotate(node_list **stack, char type)
 	last->next = first;
 	*stack = second;
 	if (type == 'b')
-		write(1, "rb\n", 4);
+		printf("rb\n");
 	else if (type == 'a')
-		write(1, "ra\n", 4);
+		printf("ra\n");
 }
 
 void reverse_rotate(node_list **stack, char type)
@@ -512,9 +464,9 @@ void reverse_rotate(node_list **stack, char type)
 	last->next = first;
 	*stack = last;
 	if (type == 'b')
-		write(1, "rrb\n", 4);
+		printf("rrb\n");
 	else if (type == 'a')
-		write(1, "rra\n", 4);
+		printf("rra\n");
 }
 
 void ss(node_list **stack_a, node_list **stack_b)
@@ -560,15 +512,6 @@ void insert_first_node(node_list **stack, node_list *first)
 	*stack = first;
 }
 
-int get_pivot(node_list **stack)
-{
-	node_list *current;
-	current = *stack;
-	while (current->next != NULL)
-		current = current->next;
-	return (current->value);
-}
-
 node_list *get_last(node_list *stack)
 {
 	node_list *current;
@@ -593,42 +536,36 @@ int count_len(node_list **stack)
 	return (len);
 }
 
-// void	sort_temp(node_list **temp)
-// {
-// 	node_list **temp_b;
-// 	int smallest_value;
-// 	int len;
+void	get_index(node_list **stack_a)
+{
+	node_list *highest_node;
+	node_list *temp;
+	int highest_value;
+	int min_value;
+	int len;
 
-// 	temp_b = malloc(sizeof(node_list *));
-// 	while(*temp)
-// 	{
-// 		len = count_len(temp);
-// 		smallest_value = pick_smallest(temp, len);
-// 		while((*temp)->value != smallest_value)
-// 			rotate(temp, 'a');
-// 		push(temp, temp_b, 'b');
-// 	}
-// 	while(*temp_b)
-// 		push(temp, temp_b, 'a');
-// }
-
-// void	get_index(node_list **stack_a)
-// {
-// 	node_list **sorted_stack;
-// 	int i;
-
-// 	sorted_stack = stack_a;
-// 	sort_temp(sorted_stack);
-// 	i = 1;
-
-// 	while(*stack_a && (*stack_a)->index == 0)
-// 	{
-// 		if ((*sorted_stack)->value == (*stack_a)->value)
-// 		{
-// 			(*stack_a)->index = i;
-// 			*sorted_stack = (*sorted_stack)->next;
-// 			i++;
-// 		}
-// 		rotate(stack_a, 'a');
-// 	}
-// }
+	min_value = -2147483648;
+	len = count_len(stack_a);
+	while(len)
+	{
+		highest_node = NULL;
+		highest_value = min_value;
+		temp = *stack_a;
+		while(temp)
+		{
+			if (temp->value == min_value && temp->index == 0)
+				temp->index = 1;
+			else if (temp->value > highest_value && temp->index == 0)
+			{
+				highest_value = temp->value;
+				highest_node = temp;
+				temp = *stack_a;
+			}
+			else
+				temp = temp->next;
+		}
+		if (highest_node != NULL)
+			highest_node->index = len; 
+		len--;
+	}
+}
