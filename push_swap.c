@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
+/*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:56:08 by vsergio           #+#    #+#             */
-/*   Updated: 2022/08/30 18:03:20 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/08/31 00:42:44 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	*bubble_sort(int *ordened);
-void	sort_100(node_list **stack_a, node_list **stack_b, int len);
-int	greb_middle(node_list **stack_a, int len);
+void bubble_sort(int *ordened, int len);
+void sort_100(node_list **stack_a, node_list **stack_b, int len);
+int greb_middle(node_list **stack_a, int len);
 
 int main(int argc, char **argv)
 {
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 		sort_5(stack_a, stack_b, argc - 1);
 		exit(EXIT_SUCCESS);
 	}
-	else if ((argc - 1 ) == 20)
+	else if ((argc - 1) == 20)
 	{
 		sort_100(stack_a, stack_b, argc - 1);
 		exit(EXIT_SUCCESS);
@@ -136,48 +136,65 @@ void sort_5(node_list **stack_a, node_list **stack_b, int len)
 		push(stack_a, stack_b, 'a');
 }
 
-void	sort_100(node_list **stack_a, node_list **stack_b, int len)
+void sort_100(node_list **stack_a, node_list **stack_b, int len)
 {
+	int smallest_value;
 	int middle;
+	int smallest_position;
+	int half;
+	int counter;
 
-	middle = greb_middle(stack_a, len);
+	counter = 0;
+	while (len > 3)
+	{
+		counter = 0;
+		len = count_len(stack_a);
+		ft_printf("Tamanho da len: %i\n", len);
+		middle = greb_middle(stack_a, len);
+		ft_printf("Valor medio: %i\n", middle);
+		while (counter < len)
+		{
+			if ((*stack_a)->value < middle)
+				push(stack_a, stack_b, 'b');
+			else
+				rotate(stack_a, 'a');
+			counter++;
+		}
+	}
+	print_stacks(stack_a, stack_b);
 }
 
-int	greb_middle(node_list **stack_a, int len)
+int greb_middle(node_list **stack_a, int len)
 {
 	node_list *temp;
 	int *ordened;
 	int middle;
 	int i;
 	int *new;
+	int half;
 
+	half = len / 2;
 	i = 0;
-	ordened = malloc(500);
+	ordened = malloc(sizeof(int) * len);
 	temp = *stack_a;
-	while(i < len && temp)
+	while (i < len && temp)
 	{
 		ordened[i] = temp->value;
 		temp = temp->next;
 		i++;
 	}
-	new = bubble_sort(ordened);
-	int j = 0;
-	ft_printf("tamanho da len: %i\n", len);
-	while(j < len)
-	{
-		ft_printf("Valores: %i\n", new[j]);
-		j++;
-	}
-	return (0);
+	bubble_sort(ordened, len);
+	return (ordened[half - 1]);
 }
 
-int	*bubble_sort(int *ordened)
+void bubble_sort(int *ordened, int len)
 {
 	int i;
 	int temp;
 
 	i = 0;
-	while(ordened[i])
+	len--;
+	while (i < len)
 	{
 		if (ordened[i] > ordened[i + 1])
 		{
@@ -189,10 +206,9 @@ int	*bubble_sort(int *ordened)
 		else
 			i++;
 	}
-	return (ordened);
 }
 
-void	radix_sort(node_list **stack_a, node_list **stack_b)
+void radix_sort(node_list **stack_a, node_list **stack_b)
 {
 	int box;
 	int highest_bit;
@@ -202,11 +218,11 @@ void	radix_sort(node_list **stack_a, node_list **stack_b)
 
 	next_bit = 0;
 	highest_bit = get_highest_bit(stack_a);
-	while(next_bit < highest_bit)
+	while (next_bit < highest_bit)
 	{
 		len = count_len(stack_a);
 		run_numbers = 0;
-		while(run_numbers < len && !check_order(stack_a))
+		while (run_numbers < len && !check_order(stack_a))
 		{
 			if ((((*stack_a)->index >> next_bit) & 1) == 1)
 				rotate(stack_a, 'a');
@@ -214,7 +230,7 @@ void	radix_sort(node_list **stack_a, node_list **stack_b)
 				push(stack_a, stack_b, 'b');
 			run_numbers++;
 		}
-		while(*stack_b != NULL)
+		while (*stack_b != NULL)
 			push(stack_a, stack_b, 'a');
 		next_bit++;
 	}
