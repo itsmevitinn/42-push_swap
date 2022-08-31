@@ -3,7 +3,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include "Libft/libft.h"
+# include "libft/libft.h"
 
 typedef struct node
 {
