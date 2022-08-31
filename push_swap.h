@@ -18,7 +18,9 @@ typedef struct node
 // 	node_list	**list;
 // }				index_list;
 
+int			which_is_better(int highest_position, int second_position, int len);
 node_list	*get_last(node_list *stack);
+int 		pick_second_highest(node_list **stack, int len, int highest_value);
 void		sort_5(node_list **stack_a, node_list **stack_b, int len);
 void		radix_sort(node_list **stack_a, node_list **stack_b);
 int			get_highest_bit(node_list **stack);

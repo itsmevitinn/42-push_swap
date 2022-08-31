@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:52:19 by vsergio           #+#    #+#             */
-/*   Updated: 2022/08/30 23:59:41 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/08/31 10:04:27 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,30 @@ int pick_highest(node_list **stack, int len)
 	while (temp != NULL && limiter < len)
 	{
 		if (highest < temp->value)
+		{
+			highest = temp->value;
+			counter++;
+		}
+		temp = temp->next;
+		limiter++;
+	}
+	return (highest);
+}
+
+int pick_second_highest(node_list **stack, int len, int highest_value)
+{
+	node_list *temp;
+	int highest;
+	int counter;
+	int limiter;
+
+	limiter = 0;
+	counter = 0;
+	temp = *stack;
+	highest = -2147483648;
+	while (temp != NULL && limiter < len)
+	{
+		if (highest < temp->value && temp->value < highest_value)
 		{
 			highest = temp->value;
 			counter++;
