@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:56:08 by vsergio           #+#    #+#             */
-/*   Updated: 2022/08/31 12:16:16 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/02 12:03:03 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,11 @@ int main(int argc, char **argv)
 		sort_5(stack_a, stack_b, argc - 1);
 		exit(EXIT_SUCCESS);
 	}
-	else if ((argc - 1) == 16)
+	else if ((argc - 1) == 6)
 	{
 		sort_100(stack_a, stack_b, argc - 1);
+		*stack_b = NULL;
+		// ft_bzero(*stack_b, sizeof(node_list));
 		print_stack(stack_a, stack_b);
 		exit(EXIT_SUCCESS);
 	}
@@ -138,14 +140,43 @@ void sort_5(node_list **stack_a, node_list **stack_b, int len)
 		push(stack_a, stack_b, 'a');
 }
 
+void print_stack(node_list **stack_a, node_list **stack_b)
+{
+	node_list *current_a;
+	node_list *current_b;
+
+	current_a = *stack_a;
+	current_b = *stack_b;
+	write(1, "\n", 1);
+	while (current_a || current_b)
+	{
+		if (current_a)
+		{
+			ft_printf("%i ", current_a->value);
+			current_a = current_a->next;
+		}
+		if (current_b)
+		{
+			ft_printf("%i", current_b->value);
+			current_b = current_b->next;
+		}
+		ft_printf("\n");
+	}
+	ft_printf("- -\na b\n");
+}
+
 void	organize_b(node_list **stack_a, node_list **stack_b, int value)
 {
 	int middle;
+	int len_b;
+
+	len_b = count_len(stack_b);
 	middle = greb_middle_b(stack_b, count_len(stack_b));
 	if (value < middle)
 	{
 		push(stack_a, stack_b, 'b');
-		rotate(stack_b, 'b');
+		if (len_b > 1)
+			rotate(stack_b, 'b');
 	}
 	else
 		push(stack_a, stack_b, 'b');
@@ -153,16 +184,15 @@ void	organize_b(node_list **stack_a, node_list **stack_b, int value)
 
 void sort_100(node_list **stack_a, node_list **stack_b, int len)
 {
-	int smallest_value;
-	int middle;
 	int smallest_position;
-	int counter;
-	int highest_value;
+	int smallest_value;
 	int highest_position;
-	int half;
-	int second_value;
+	int highest_value;
 	int second_position;
-	int middle_b;
+	int second_value;
+	int middle;
+	int half;
+	int counter;
 	
 	counter = 0;
 	while (!check_order(stack_a) && len > 3)
@@ -179,10 +209,11 @@ void sort_100(node_list **stack_a, node_list **stack_b, int len)
 			counter++;
 		}
 	}
-	sort_3(stack_a);
+	if (len == 3)
+		sort_3(stack_a);
 	len = count_len(stack_b);
 	half = len / 2;
-	while(*stack_b != NULL)
+	while(*stack_b != NULL && len > 0)
 	{
 		// len = count_len(stack_b);
 		highest_value = pick_highest(stack_b, len);
@@ -273,29 +304,29 @@ void sort_100(node_list **stack_a, node_list **stack_b, int len)
 	}
 }
 
-void print_stack(node_list **stack_a, node_list **stack_b)
-{
-	node_list *current_a;
-	node_list *current_b;
+// void print_stack(node_list **stack_a, node_list **stack_b)
+// {
+// 	node_list *current_a;
+// 	node_list *current_b;
 
-	current_a = *stack_a;
-	current_b = *stack_b;
-	ft_printf("STACK A\n");
-	while (current_a)
-	{
-			ft_printf("%i ", current_a->value);
-			ft_printf("index: %i\n", current_a->index);
-			current_a = current_a->next;
-	}
-	ft_printf("\n");
-	ft_printf("STACK B\n");
-	while (current_b)
-	{
-			ft_printf("%i ", current_b->value);
-			ft_printf("index: %i\n", current_b->index);
-			current_b = current_b->next;
-	}
-}
+// 	current_a = *stack_a;
+// 	current_b = *stack_b;
+// 	ft_printf("STACK A\n");
+// 	while (current_a)
+// 	{
+// 			ft_printf("%i ", current_a->value);
+// 			ft_printf("index: %i\n", current_a->index);
+// 			current_a = current_a->next;
+// 	}
+// 	ft_printf("\n");
+// 	ft_printf("STACK B\n");
+// 	while (current_b)
+// 	{
+// 			ft_printf("%i ", current_b->value);
+// 			ft_printf("index: %i\n", current_b->index);
+// 			current_b = current_b->next;
+// 	}
+// }
 
 int greb_middle_b(node_list **stack_a, int len)
 {
