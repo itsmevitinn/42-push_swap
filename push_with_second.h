@@ -11,7 +11,7 @@ typedef struct node
 }				node_list;
 
 node_list	*get_last(node_list *stack);
-int			greb_middle(node_list **stack_a, int len);
+void		organize_b(node_list **stack_a, node_list **stack_b, int value);
 void		bubble_sort(int *ordened, int len);
 void		sort_3(node_list **stack_a);
 void		sort_5(node_list **stack_a, node_list **stack_b, int len);
@@ -24,12 +24,13 @@ void		push(node_list **stack_a, node_list **stack_b, char type);
 void		swap(node_list **stack_list, char type);
 void		rotate(node_list **stack, char type);
 void		reverse_rotate(node_list **stack, char type);
+int			greb_middle(node_list **stack_a, int len);
+int			which_is_better(int highest_position, int second_position, int len);
+int 		pick_second_highest(node_list **stack, int len, int highest_value);
 int			get_highest_bit(node_list **stack);
 int 		pick_smallest(node_list **stack, int len);
-// int 		pick_smallest_middle(node_list **stack, int len, int middle);
 int			count_len(node_list **stack);
 int			pick_highest(node_list **stack, int len);
-// int			pick_highest_middle(node_list **stack, int len, int middle);
 int			check_order(node_list **stack);
 int			find_position(node_list **stack, int smallest);
 int			check_errors(node_list **stack);

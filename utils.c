@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:53:22 by vsergio           #+#    #+#             */
-/*   Updated: 2022/08/30 12:19:23 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/05 15:10:51 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,11 @@ void print_stacks(node_list **stack_a, node_list **stack_b)
 		if (current_a)
 		{
 			ft_printf("%i ", current_a->value);
-			ft_printf("index: %i ", current_a->index);
 			current_a = current_a->next;
 		}
 		if (current_b)
 		{
 			ft_printf("%i", current_b->value);
-			ft_printf("index: %i ", current_b->index);
 			current_b = current_b->next;
 		}
 		ft_printf("\n");

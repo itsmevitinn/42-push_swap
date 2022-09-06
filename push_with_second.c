@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   push_with_second.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:56:08 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/05 18:02:25 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/05 22:34:37 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "push_swap.h"
+#include "push_with_second.h"
 
 int main(int argc, char **argv)
 {
@@ -21,7 +21,10 @@ int main(int argc, char **argv)
 	stack_b = malloc(sizeof(node_list));
 	indexargv = 1;
 	while (indexargv < argc)
-		insert_last_node(stack_a, ft_atoi(argv[indexargv++]));
+	{
+		insert_last_node(stack_a, ft_atoi(argv[indexargv]));
+		indexargv++;
+	}
 	check_errors(stack_a);
 	if ((argc - 1) == 3)
 	{
@@ -31,7 +34,7 @@ int main(int argc, char **argv)
 	{
 		sort_5(stack_a, stack_b, argc - 1);
 	}
-	else if ((argc - 1) == 16)
+	else if ((argc - 1) == 100)
 	{
 		sort_100(stack_a, stack_b, argc - 1);
 		*stack_b = NULL;
@@ -41,7 +44,7 @@ int main(int argc, char **argv)
 		get_index(stack_a);
 		radix_sort(stack_a, stack_b);
 	}
-	print_stacks(stack_a, stack_b);
+	// print_stacks(stack_a, stack_b);
 	return (0);
 }
 
@@ -51,7 +54,7 @@ void sort_3(node_list **stack_a)
 	int highest_position;
 	int smallest_value;
 	int smallest_position;
-
+	// ft_printf("entrou no sort 3\n");
 	while (!check_order(stack_a))
 	{
 		highest_value = pick_highest(stack_a, 3);
@@ -79,8 +82,8 @@ void sort_3(node_list **stack_a)
 
 void sort_5(node_list **stack_a, node_list **stack_b, int len)
 {
+	int small_value;
 	int smallest_position;
-	int smallest_value;
 	int half;
 	int counter;
 
@@ -88,13 +91,14 @@ void sort_5(node_list **stack_a, node_list **stack_b, int len)
 	while (counter < 2)
 	{
 		half = len / 2;
-		smallest_value = pick_smallest(stack_a, len);
-		smallest_position = find_position(stack_a, smallest_value);
+		small_value = pick_smallest(stack_a, len);
+		smallest_position = find_position(stack_a, small_value);
 		while (smallest_position > half)
 		{
 			if (smallest_position == len)
 			{
-				reverse_rotate(stack_a, 'a');
+				if (len > 1)
+					reverse_rotate(stack_a, 'a');
 				push(stack_a, stack_b, 'b');
 				len--;
 				break;
@@ -123,22 +127,31 @@ void sort_5(node_list **stack_a, node_list **stack_b, int len)
 
 void sort_100(node_list **stack_a, node_list **stack_b, int len)
 {
+	int smallest_position;
+	int smallest_value;
 	int highest_position;
 	int highest_value;
+	int second_position;
+	int second_value;
 	int middle;
 	int half;
 	int counter;
 	
 	counter = 0;
-	while (!check_order(stack_a) && len > 3)
+	while (!check_order(stack_a))
 	{
 		counter = 0;
-		len = count_len(stack_a);
 		middle = greb_middle(stack_a, len);
+		len = count_len(stack_a);
+		if (len == 3)
+			break;
+		// ft_printf("Valor medio: %i\n", middle);
+		// ft_printf("Tamanho stack: %i\n", len);
 		while (counter < len)
 		{
+			// ft_printf("Head: %i\n", (*stack_a)->value);
 			if ((*stack_a)->value < middle)
-				push(stack_a, stack_b, 'b');	
+				organize_b(stack_a, stack_b, (*stack_a)->value);
 			else
 				rotate(stack_a, 'a');
 			counter++;
@@ -147,32 +160,99 @@ void sort_100(node_list **stack_a, node_list **stack_b, int len)
 	if (len == 3)
 		sort_3(stack_a);
 	len = count_len(stack_b);
+	half = len / 2;
+	// ft_printf("entrou na b\n");
 	while(*stack_b != NULL && len > 0)
 	{
 		highest_value = pick_highest(stack_b, len);
 		highest_position = find_position(stack_b, highest_value);
-		while(highest_position <= half)
+		// ft_printf("Maior valor: %i\n", highest_value);
+		if (len > 1)
 		{
-			if (highest_position == 1)
-			{
-				push(stack_a, stack_b, 'a');
-				len--;
-				break;		
-			}
-			rotate(stack_b, 'b');
-			highest_position--;
+			second_value = pick_second_highest(stack_b, len, highest_value);
+			second_position = find_position (stack_b, second_value);
 		}
-		while(highest_position > half)
+		if (which_is_better(highest_position, second_position, len) == 1)
 		{
-			if (highest_position == len)
+			// ft_printf("pegou segundo maior: %i\n", second_value);
+			while(second_position <= half)
 			{
-				reverse_rotate(stack_b, 'b');
-				push(stack_a, stack_b, 'a');
-				len--;
-				break;		
+				if (second_position == 1)
+				{
+					push(stack_a, stack_b, 'a');
+					len--;
+					break;
+				}
+				rotate(stack_b, 'b');
+				second_position--;
 			}
-			reverse_rotate(stack_b, 'b');
-			highest_position++;
+			while(second_position > half)
+			{
+				if (second_position == len)
+				{
+					if (len > 1)
+						reverse_rotate(stack_b, 'b');
+					push(stack_a, stack_b, 'a');
+					len--;
+					break;		
+				}
+				reverse_rotate(stack_b, 'b');
+				second_position++;
+			}
+			highest_position = find_position(stack_b, highest_value);
+			half = len / 2;
+			while(highest_position <= half)
+			{
+				if (highest_position == 1)
+				{
+					push(stack_a, stack_b, 'a');
+					len--;
+					break;		
+				}
+				rotate(stack_b, 'b');
+				highest_position--;
+			}
+			while(highest_position > half)
+			{
+				if (highest_position == len)
+				{
+					if (len > 1)
+						reverse_rotate(stack_b, 'b');
+					push(stack_a, stack_b, 'a');
+					len--;
+					break;		
+				}
+				reverse_rotate(stack_b, 'b');
+				highest_position++;
+			}
+			swap(stack_a, 'a');
+		}
+		else
+		{
+			while(highest_position <= half)
+			{
+				if (highest_position == 1)
+				{
+					push(stack_a, stack_b, 'a');
+					len--;
+					break;		
+				}
+				rotate(stack_b, 'b');
+				highest_position--;
+			}
+			while(highest_position > half)
+			{
+				if (highest_position == len)
+				{
+					if (len > 1)
+						reverse_rotate(stack_b, 'b');
+					push(stack_a, stack_b, 'a');
+					len--;
+					break;		
+				}
+				reverse_rotate(stack_b, 'b');
+				highest_position++;
+			}
 		}
 	}
 }
@@ -203,6 +283,23 @@ void radix_sort(node_list **stack_a, node_list **stack_b)
 			push(stack_a, stack_b, 'a');
 		next_bit++;
 	}
+}
+
+void	organize_b(node_list **stack_a, node_list **stack_b, int value)
+{
+	int middle;
+	int len_b;
+
+	len_b = count_len(stack_b);
+	middle = greb_middle(stack_b, count_len(stack_b));
+	if (value < middle)
+	{
+		push(stack_a, stack_b, 'b');
+		if (len_b > 1)
+			rotate(stack_b, 'b');
+	}
+	else
+		push(stack_a, stack_b, 'b');
 }
 
 void bubble_sort(int *ordened, int len)
