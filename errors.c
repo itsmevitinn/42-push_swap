@@ -6,10 +6,27 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:52:54 by vsergio           #+#    #+#             */
-/*   Updated: 2022/08/30 11:53:08 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/06 11:09:02 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
+
+int check_order_b(node_list **stack)
+{
+	node_list *temp;
+	node_list *next;
+
+	temp = *stack;
+	while (temp->next != NULL)
+	{
+		next = temp->next;
+		if (temp->value > next->value)
+			temp = temp->next;
+		else
+			return (0);
+	}
+	return (1);
+}
 
 int check_order(node_list **stack)
 {
