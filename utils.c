@@ -6,10 +6,9 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:53:22 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/05 15:10:51 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/05 23:15:38 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "push_swap.h"
 
 int count_len(node_list **stack)

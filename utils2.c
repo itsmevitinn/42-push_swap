@@ -6,11 +6,68 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:52:19 by vsergio           #+#    #+#             */
-/*   Updated: 2022/08/31 10:04:27 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/05 23:15:08 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "push_swap.h"
+
+int	which_is_better(int highest_position, int second_position, int len)
+{
+	int difference;
+	int half;
+	int actions_second;
+	int actions_highest;
+	
+	half = len/2;
+	actions_highest = 0;
+	actions_second = 0;
+
+	while (second_position <= half)
+	{
+		if (second_position == 1)
+		{
+			actions_second++;
+			break;
+		}
+		second_position--;
+		actions_second++;
+	}
+	while (second_position > half)
+	{
+		if (second_position == len)
+		{
+			actions_second += 2;
+			break;
+		}
+		second_position++;
+		actions_second++;
+	}
+	while (highest_position <= half)
+	{
+		if (highest_position == 1)
+		{
+			actions_highest++;
+			break;
+		}
+		highest_position--;
+		actions_highest++;
+	}
+	while (highest_position > half)
+	{
+		if (highest_position == len)
+		{
+			actions_highest += 2;
+			break;
+		}
+		highest_position++;
+		actions_highest++;
+	}
+	if (actions_second < actions_highest)
+		return(1);
+	else
+		return(0);
+	return (0);
+}
 
 int pick_highest(node_list **stack, int len)
 {
@@ -60,55 +117,6 @@ int pick_second_highest(node_list **stack, int len, int highest_value)
 	return (highest);
 }
 
-int pick_highest_middle(node_list **stack, int len, int middle)
-{
-	node_list *temp;
-	int highest;
-	int counter;
-	int limiter;
-
-	limiter = 0;
-	counter = 0;
-	temp = *stack;
-	highest = -2147483648;
-	while (temp != NULL && limiter < len)
-	{
-		if (highest < temp->value && temp->value > middle)
-		{
-			highest = temp->value;
-			counter++;
-		}
-		temp = temp->next;
-		limiter++;
-	}
-	return (highest);
-}
-
-
-int pick_smallest_middle(node_list **stack, int len, int middle)
-{
-	node_list *temp;
-	int smallest;
-	int counter;
-	int limiter;
-
-	limiter = 0;
-	counter = 0;
-	temp = *stack;
-	smallest = 2147483647;
-	while (temp != NULL && limiter < len)
-	{
-		if (smallest > temp->value && temp->value < middle)
-		{
-			smallest = temp->value;
-			counter++;
-		}
-		temp = temp->next;
-		limiter++;
-	}
-	return (smallest);
-}
-
 int pick_smallest(node_list **stack, int len)
 {
 	node_list *temp;
@@ -132,7 +140,6 @@ int pick_smallest(node_list **stack, int len)
 	}
 	return (smallest);
 }
-
 
 void	get_index(node_list **stack_a)
 {
@@ -167,4 +174,3 @@ void	get_index(node_list **stack_a)
 		index++;
 	}
 }
-
