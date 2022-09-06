@@ -11,6 +11,8 @@ typedef struct node
 }				node_list;
 
 node_list	*get_last(node_list *stack);
+void		send_second(node_list **stack_a, node_list **stack_b, int second_position, int len);
+void		send_highest(node_list **stack_a, node_list **stack_b, int highest_position, int len);
 void		sort_b(node_list **stack_a, node_list **stack_b, int len);
 void		check_second(node_list **stack_a, node_list **stack_b, int highest_value, int highest_position, int len); 
 void		organize_b(node_list **stack_a, node_list **stack_b, int value);
