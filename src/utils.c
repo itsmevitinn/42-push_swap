@@ -6,10 +6,10 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:53:22 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/05 23:15:38 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/07 12:41:34 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "push_swap.h"
+#include "../include/push_swap.h"
 
 int count_len(node_list **stack)
 {
@@ -94,7 +94,6 @@ int get_highest_bit(node_list **stack)
 	node_list *temp;
 	int highest;
 	int bits;
-	int size;
 
 	bits = 0;
 	temp = *stack;

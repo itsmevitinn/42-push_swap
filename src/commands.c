@@ -6,11 +6,11 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:42:14 by vsergio           #+#    #+#             */
-/*   Updated: 2022/08/30 12:13:53 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/07 12:41:13 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../include/push_swap.h"
 
 void swap(node_list **stack_list, char type)
 {

@@ -6,10 +6,10 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 11:27:04 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/06 15:58:21 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/07 12:40:34 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "push_with_second.h"
+#include "../include/push_swap.h"
 
 void	sort_b(node_list **stack_a, node_list **stack_b, int len)
 {
@@ -275,8 +275,6 @@ void sort_5(node_list **stack_a, node_list **stack_b, int len)
 
 void sort_100(node_list **stack_a, node_list **stack_b, int len)
 {
-	int smallest_position;
-	int smallest_value;
 	int middle;
 	int counter;
 	
@@ -305,7 +303,6 @@ void sort_100(node_list **stack_a, node_list **stack_b, int len)
 
 void radix_sort(node_list **stack_a, node_list **stack_b)
 {
-	int box;
 	int highest_bit;
 	int run_numbers;
 	int next_bit;

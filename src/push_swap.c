@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_with_second.c                                 :+:      :+:    :+:   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:56:08 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/06 12:03:29 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/07 12:41:29 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "push_with_second.h"
+#include "../include/push_swap.h"
 
 int main(int argc, char **argv)
 {
@@ -88,9 +88,7 @@ int greb_middle(node_list **stack_a, int len)
 {
 	node_list *temp;
 	int *ordened;
-	int middle;
 	int i;
-	int *new;
 	int half;
 
 	half = len / 2;

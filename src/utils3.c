@@ -6,10 +6,10 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 11:33:00 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/06 11:37:34 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/07 12:41:49 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "push_with_second.h"
+#include "../include/push_swap.h"
 
 void	check_second(node_list **stack_a, node_list **stack_b, int highest_value, int highest_position, int len) 
 {

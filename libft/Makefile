@@ -17,22 +17,26 @@ CFLAGS	= -Wall -Wextra -Werror
 AR_RC 	= ar rc
 
 .c.o:
-			${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+			@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 $(NAME):	${OBJS}
-			${AR_RC} ${NAME} ${OBJS} 
+			@${AR_RC} ${NAME} ${OBJS}
+			@echo "\033[32m 💯 | Libft created."
 
 bonus:		${OBJS_BONUS}
-			${AR_RC} ${NAME} ${OBJS_BONUS}
+			@${AR_RC} ${NAME} ${OBJS_BONUS}
+			@echo "\033[32m ✨ | Bonus libft created."
 
 all:		$(NAME)
 
 clean:		
-			${RM} ${OBJS}
-			${RM} ${OBJS_BONUS}
+			@${RM} ${OBJS}
+			@${RM} ${OBJS_BONUS}
+			@echo "\033[33m 🧹 | Libft cleaned."
 
 fclean:		clean
-			${RM} ${NAME}
+			@${RM} ${NAME}
+			@echo "\033[33m 🌪️  | Libft all cleaned."
 
 re:		fclean all
 

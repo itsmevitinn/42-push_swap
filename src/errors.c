@@ -6,10 +6,10 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:52:54 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/06 11:09:02 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/07 12:41:19 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "push_swap.h"
+#include "../include/push_swap.h"
 
 int check_order_b(node_list **stack)
 {

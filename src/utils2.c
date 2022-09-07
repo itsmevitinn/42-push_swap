@@ -6,14 +6,13 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:52:19 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/05 23:15:08 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/07 12:41:45 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "push_swap.h"
+#include "../include/push_swap.h"
 
 int	which_is_better(int highest_position, int second_position, int len)
 {
-	int difference;
 	int half;
 	int actions_second;
 	int actions_highest;
