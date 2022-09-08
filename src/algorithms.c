@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 11:27:04 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/08 11:46:59 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/08 18:32:10 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -14,52 +14,33 @@
 void	sort_b(node_list **stack_a, node_list **stack_b, int len)
 {
 	int	highest_value;
-	int	highest_position;
-	int	second_position;
+	int	highest_pos;
+	int	second_pos;
 	int	second_value;
-	int	half;
 
-	half = len / 2;
 	while (*stack_b != NULL && len > 0)
 	{
-		if (check_order_b(stack_a, stack_b) == 1)
+		if (check_order(stack_a, stack_b, 'b') == 1)
 			break ;
-		highest_value = pick_highest(stack_b, len);
-		highest_position = find_position(stack_b, highest_value);
+		highest_value = pick_value(stack_b, len, 'h');
+		highest_pos = find_position(stack_b, highest_value);
 		if (len > 1)
 		{
 			second_value = pick_second_highest(stack_b, len, highest_value);
-			second_position = find_position (stack_b, second_value);
+			second_pos = find_position(stack_b, second_value);
+			if (which_is_better(highest_pos, second_pos, len) == 1)
+			{
+				send_number(stack_a, stack_b, second_pos, &len);
+				highest_pos = find_position(stack_b, highest_value);
+				send_number(stack_a, stack_b, highest_pos, &len);
+				swap(stack_a, 'a');
+			}
+			else
+				send_number(stack_a, stack_b, highest_pos, &len);
 		}
-		if (which_is_better(highest_position, second_position, len) == 1 && len > 1)
-		{
-			send_number(stack_a, stack_b, second_position, &len);
-			highest_position = find_position(stack_b, highest_value);
-			send_number(stack_a, stack_b, highest_position, &len);
-			swap(stack_a, 'a');
-		}
-		else
-			send_number(stack_a, stack_b, highest_position, &len);
+		else if (len == 1)
+			send_number(stack_a, stack_b, highest_pos, &len);
 	}
-}
-
-int	check_order_b(node_list **stack_a, node_list **stack_b)
-{
-	node_list	*temp;
-	node_list	*next;
-
-	temp = *stack_b;
-	while (temp->next != NULL)
-	{
-		next = temp->next;
-		if (temp->value > next->value)
-			temp = temp->next;
-		else
-			return (0);
-	}
-	while (*stack_b != NULL)
-		push(stack_a, stack_b, 'a');
-	return (1);
 }
 
 int	how_many_actions(int position, int half, int len)
@@ -90,25 +71,25 @@ int	how_many_actions(int position, int half, int len)
 	return (actions);
 }
 
-void	send_number(node_list **stack_a, node_list **stack_b, int position, int *len)
+void	send_number(node_list **stack_a, node_list **stack_b, int pos, int *len)
 {
 	int	half;
 
 	half = *len / 2;
-	while (position <= half)
+	while (pos <= half)
 	{
-		if (position == 1)
+		if (pos == 1)
 		{
 			push(stack_a, stack_b, 'a');
 			*len = *len - 1;
 			break ;
 		}
 		rotate(stack_b, 'b');
-		position--;
+		pos--;
 	}
-	while (position > half)
+	while (pos > half)
 	{
-		if (position == *len)
+		if (pos == *len)
 		{
 			if (*len > 1)
 				reverse_rotate(stack_b, 'b');
@@ -117,7 +98,7 @@ void	send_number(node_list **stack_a, node_list **stack_b, int position, int *le
 			break ;
 		}
 		reverse_rotate(stack_b, 'b');
-		position++;
+		pos++;
 	}
 }
 
@@ -137,11 +118,11 @@ void	sort_3(node_list **stack_a)
 	int	smallest_value;
 	int	smallest_position;
 
-	while (!check_order(stack_a))
+	while (!check_order(stack_a, NULL, 'a'))
 	{
-		highest_value = pick_highest(stack_a, 3);
+		highest_value = pick_value(stack_a, 3, 'h');
 		highest_position = find_position(stack_a, highest_value);
-		smallest_value = pick_smallest(stack_a, 3);
+		smallest_value = pick_value(stack_a, 3, 's');
 		smallest_position = find_position(stack_a, smallest_value);
 		if (highest_position == 2 && smallest_position == 1)
 		{
@@ -170,10 +151,10 @@ void	sort_5(node_list **stack_a, node_list **stack_b, int len)
 	int	counter;
 
 	counter = 0;
-	while (counter < 2 && !check_order(stack_a))
+	while (counter < 2 && !check_order(stack_a, NULL, 'a'))
 	{
 		half = len / 2;
-		small_value = pick_smallest(stack_a, len);
+		small_value = pick_value(stack_a, len, 's');
 		smallest_position = find_position(stack_a, small_value);
 		while (smallest_position > half)
 		{
@@ -201,7 +182,7 @@ void	sort_5(node_list **stack_a, node_list **stack_b, int len)
 		}
 		counter++;
 	}
-	if (!check_order(stack_a))
+	if (!check_order(stack_a, NULL, 'a'))
 		sort_3(stack_a);
 	while (*stack_b != NULL)
 		push(stack_a, stack_b, 'a');
@@ -213,7 +194,7 @@ void	sort_100(node_list **stack_a, node_list **stack_b, int len)
 	int	counter;
 
 	counter = 0;
-	while (!check_order(stack_a))
+	while (!check_order(stack_a, NULL, 'a'))
 	{
 		counter = 0;
 		len = count_len(stack_a);
@@ -229,7 +210,7 @@ void	sort_100(node_list **stack_a, node_list **stack_b, int len)
 			counter++;
 		}
 	}
-	if (len == 3 && !check_order(stack_a))
+	if (len == 3 && !check_order(stack_a, NULL, 'a'))
 		sort_3(stack_a);
 	len = count_len(stack_b);
 	sort_b(stack_a, stack_b, len);
@@ -248,7 +229,7 @@ void	radix_sort(node_list **stack_a, node_list **stack_b)
 	{
 		len = count_len(stack_a);
 		run_numbers = 0;
-		while (run_numbers < len && !check_order(stack_a))
+		while (run_numbers < len && !check_order(stack_a, NULL, 'a'))
 		{
 			if ((((*stack_a)->index >> next_bit) & 1) == 1)
 				rotate(stack_a, 'a');

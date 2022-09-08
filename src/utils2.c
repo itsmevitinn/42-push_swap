@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:52:19 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/08 11:29:23 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/08 18:25:17 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -24,30 +24,6 @@ int	which_is_better(int highest_position, int second_position, int len)
 		return (1);
 	else
 		return (0);
-}
-
-int	pick_highest(node_list **stack, int len)
-{
-	node_list	*temp;
-	int			highest;
-	int			counter;
-	int			limiter;
-
-	limiter = 0;
-	counter = 0;
-	temp = *stack;
-	highest = -2147483648;
-	while (temp != NULL && limiter < len)
-	{
-		if (highest < temp->value)
-		{
-			highest = temp->value;
-			counter++;
-		}
-		temp = temp->next;
-		limiter++;
-	}
-	return (highest);
 }
 
 int	pick_second_highest(node_list **stack, int len, int highest_value)
@@ -74,28 +50,31 @@ int	pick_second_highest(node_list **stack, int len, int highest_value)
 	return (highest);
 }
 
-int	pick_smallest(node_list **stack, int len)
+int	pick_value(node_list **stack, int len, char type)
 {
 	node_list	*temp;
-	int			smallest;
-	int			counter;
-	int			limiter;
+	int			value;
 
-	limiter = 0;
-	counter = 0;
 	temp = *stack;
-	smallest = 2147483647;
-	while (temp != NULL && limiter < len)
+	if (type == 's')
+		value = 2147483647;
+	else if (type == 'h')
+		value = -2147483648;
+	while (temp != NULL)
 	{
-		if (smallest > temp->value)
+		if (type == 's')
 		{
-			smallest = temp->value;
-			counter++;
+			if (value > temp->value)
+				value = temp->value;
+		}
+		else if (type == 'h')
+		{
+			if (value < temp->value)
+				value = temp->value;
 		}
 		temp = temp->next;
-		limiter++;
 	}
-	return (smallest);
+	return (value);
 }
 
 void	get_index(node_list **stack_a, int len, int index)

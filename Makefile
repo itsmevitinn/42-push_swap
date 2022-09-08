@@ -23,7 +23,7 @@ RM = rm -f
 all:		$(NAME)
 
 $(NAME):	$(LIBFT)
-			@$(GCC) $(FUNCS) $(LIBFT) -o $(NAME)
+			@$(GCC) -g $(FUNCS) $(LIBFT) -o $(NAME)
 			@echo "\033[32m 💯 | Push_swap created."
 
 $(LIBFT):

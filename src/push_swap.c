@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:56:08 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/08 11:35:26 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/08 17:07:35 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -22,23 +22,28 @@ int	main(int argc, char **argv)
 	indexargv = 1;
 	while (indexargv < argc)
 		insert_last_node(stack_a, ft_atoi(argv[indexargv++]));
-	check_errors(stack_a);
+	duplicated_and_ordened(stack_a, NULL);
+	choose_algorithm(stack_a, stack_b, argc);
+	*stack_b = NULL; //faze funcao de free
+	// print_stacks(stack_a, stack_b); 
+	return (0);
+}
+
+void	choose_algorithm(node_list **stack_a, node_list **stack_b, int argc)
+{
 	if ((argc - 1) == 2)
 		sort_2(stack_a);
 	else if ((argc - 1) == 3)
 		sort_3(stack_a);
 	else if ((argc - 1) <= 5)
 		sort_5(stack_a, stack_b, argc - 1);
-	else if ((argc - 1) == 100)
+	else if ((argc - 1) < 350)
 		sort_100(stack_a, stack_b, argc - 1);
 	else if ((argc - 1) >= 350)
 	{
 		get_index(stack_a, count_len(stack_a), 1);
 		radix_sort(stack_a, stack_b);
 	}
-	*stack_b = NULL; //faze funcao de free
-	// print_stacks(stack_a, stack_b); 
-	return (0);
 }
 
 void	organize_b(node_list **stack_a, node_list **stack_b, int value)
