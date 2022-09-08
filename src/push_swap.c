@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:56:08 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/07 12:41:29 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/07 23:54:00 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 		sort_3(stack_a);
 	else if ((argc - 1) <= 5)
 		sort_5(stack_a, stack_b, argc - 1);
-	else if ((argc - 1) < 350)
+	else if ((argc - 1) == 100)
 	{
 		sort_100(stack_a, stack_b, argc - 1);
 		*stack_b = NULL;

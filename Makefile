@@ -14,7 +14,7 @@ LIBFT = ./libft/libft.a
 
 SRC_DIR = ./src/
 
-SRCS = algorithms.c commands.c errors.c push_swap.c utils.c utils2.c utils3.c
+SRCS = algorithms.c commands.c errors.c push_swap.c utils.c utils2.c
 
 FUNCS = $(addprefix $(SRC_DIR), $(SRCS))
 
