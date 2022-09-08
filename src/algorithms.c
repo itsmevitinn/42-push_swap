@@ -6,24 +6,24 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 11:27:04 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/08 00:39:16 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/08 11:46:59 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
 
 void	sort_b(node_list **stack_a, node_list **stack_b, int len)
 {
-	int highest_value;
-	int highest_position;
-	int second_position;
-	int second_value;
-	int half;
+	int	highest_value;
+	int	highest_position;
+	int	second_position;
+	int	second_value;
+	int	half;
 
 	half = len / 2;
-	while(*stack_b != NULL && len > 0)
+	while (*stack_b != NULL && len > 0)
 	{
 		if (check_order_b(stack_a, stack_b) == 1)
-			break;
+			break ;
 		highest_value = pick_highest(stack_b, len);
 		highest_position = find_position(stack_b, highest_value);
 		if (len > 1)
@@ -33,14 +33,13 @@ void	sort_b(node_list **stack_a, node_list **stack_b, int len)
 		}
 		if (which_is_better(highest_position, second_position, len) == 1 && len > 1)
 		{
-			send_second(stack_a, stack_b, second_position, &len, &half);
+			send_number(stack_a, stack_b, second_position, &len);
 			highest_position = find_position(stack_b, highest_value);
-			half = len / 2;
-			send_highest(stack_a, stack_b, highest_position, &len, &half);
+			send_number(stack_a, stack_b, highest_position, &len);
 			swap(stack_a, 'a');
 		}
 		else
-			send_highest(stack_a, stack_b, highest_position, &len, &half);
+			send_number(stack_a, stack_b, highest_position, &len);
 	}
 }
 
@@ -63,77 +62,80 @@ int	check_order_b(node_list **stack_a, node_list **stack_b)
 	return (1);
 }
 
-void	send_second(node_list **stack_a, node_list **stack_b, int second_position, int *len, int *half)
+int	how_many_actions(int position, int half, int len)
 {
-	while(second_position <= *half)
+	int	actions;
+
+	actions = 0;
+	while (position <= half)
 	{
-		if (second_position == 1)
+		if (position == 1)
 		{
-			push(stack_a, stack_b, 'a');
-			*len = *len - 1;
-			break;
+			actions++;
+			break ;
 		}
-		rotate(stack_b, 'b');
-		second_position--;
+		position--;
+		actions++;
 	}
-	while(second_position > *half)
+	while (position > half)
 	{
-		if (second_position == *len)
+		if (position == len)
 		{
-			if (*len > 1)
-				reverse_rotate(stack_b, 'b');
-			push(stack_a, stack_b, 'a');
-			*len = *len - 1;
-			break;
+			actions += 2;
+			break ;
 		}
-		reverse_rotate(stack_b, 'b');
-		second_position++;
+		position++;
+		actions++;
 	}
+	return (actions);
 }
 
-void	send_highest(node_list **stack_a, node_list **stack_b, int highest_position, int *len, int *half)
+void	send_number(node_list **stack_a, node_list **stack_b, int position, int *len)
 {
-	while(highest_position <= *half)
+	int	half;
+
+	half = *len / 2;
+	while (position <= half)
 	{
-		if (highest_position == 1)
+		if (position == 1)
 		{
 			push(stack_a, stack_b, 'a');
 			*len = *len - 1;
-			break;
+			break ;
 		}
 		rotate(stack_b, 'b');
-		highest_position--;
+		position--;
 	}
-	while(highest_position > *half)
+	while (position > half)
 	{
-		if (highest_position == *len)
+		if (position == *len)
 		{
 			if (*len > 1)
 				reverse_rotate(stack_b, 'b');
 			push(stack_a, stack_b, 'a');
 			*len = *len - 1;
-			break;
+			break ;
 		}
 		reverse_rotate(stack_b, 'b');
-		highest_position++;
+		position++;
 	}
 }
 
 void	sort_2(node_list **stack_a)
 {
-	node_list *next;
+	node_list	*next;
 
 	next = (*stack_a)->next;
 	if ((*stack_a)->value > next->value)
 		swap(stack_a, 'a');
 }
 
-void sort_3(node_list **stack_a)
+void	sort_3(node_list **stack_a)
 {
-	int highest_value;
-	int highest_position;
-	int smallest_value;
-	int smallest_position;
+	int	highest_value;
+	int	highest_position;
+	int	smallest_value;
+	int	smallest_position;
 
 	while (!check_order(stack_a))
 	{
@@ -160,12 +162,12 @@ void sort_3(node_list **stack_a)
 	}
 }
 
-void sort_5(node_list **stack_a, node_list **stack_b, int len)
+void	sort_5(node_list **stack_a, node_list **stack_b, int len)
 {
-	int small_value;
-	int smallest_position;
-	int half;
-	int counter;
+	int	small_value;
+	int	smallest_position;
+	int	half;
+	int	counter;
 
 	counter = 0;
 	while (counter < 2 && !check_order(stack_a))
@@ -181,7 +183,7 @@ void sort_5(node_list **stack_a, node_list **stack_b, int len)
 					reverse_rotate(stack_a, 'a');
 				push(stack_a, stack_b, 'b');
 				len--;
-				break;
+				break ;
 			}
 			reverse_rotate(stack_a, 'a');
 			smallest_position++;
@@ -192,7 +194,7 @@ void sort_5(node_list **stack_a, node_list **stack_b, int len)
 			{
 				push(stack_a, stack_b, 'b');
 				len--;
-				break;
+				break ;
 			}
 			rotate(stack_a, 'a');
 			smallest_position--;
@@ -205,11 +207,11 @@ void sort_5(node_list **stack_a, node_list **stack_b, int len)
 		push(stack_a, stack_b, 'a');
 }
 
-void sort_100(node_list **stack_a, node_list **stack_b, int len)
+void	sort_100(node_list **stack_a, node_list **stack_b, int len)
 {
-	int middle;
-	int counter;
-	
+	int	middle;
+	int	counter;
+
 	counter = 0;
 	while (!check_order(stack_a))
 	{
@@ -217,7 +219,7 @@ void sort_100(node_list **stack_a, node_list **stack_b, int len)
 		len = count_len(stack_a);
 		middle = greb_middle(stack_a, len);
 		if (len == 3)
-			break;
+			break ;
 		while (counter < len)
 		{
 			if ((*stack_a)->value < middle)
@@ -233,12 +235,12 @@ void sort_100(node_list **stack_a, node_list **stack_b, int len)
 	sort_b(stack_a, stack_b, len);
 }
 
-void radix_sort(node_list **stack_a, node_list **stack_b)
+void	radix_sort(node_list **stack_a, node_list **stack_b)
 {
-	int highest_bit;
-	int run_numbers;
-	int next_bit;
-	int len;
+	int	highest_bit;
+	int	run_numbers;
+	int	next_bit;
+	int	len;
 
 	next_bit = 0;
 	highest_bit = get_highest_bit(stack_a);

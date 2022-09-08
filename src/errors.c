@@ -6,15 +6,15 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:52:54 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/08 00:31:45 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/08 10:40:06 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
 
-int check_order(node_list **stack)
+int	check_order(node_list **stack)
 {
-	node_list *temp;
-	node_list *next;
+	node_list	*temp;
+	node_list	*next;
 
 	temp = *stack;
 	while (temp->next != NULL)
@@ -28,10 +28,10 @@ int check_order(node_list **stack)
 	return (1);
 }
 
-int check_errors(node_list **stack)
+int	check_errors(node_list **stack)
 {
-	node_list *temp;
-	node_list *next;
+	node_list	*temp;
+	node_list	*next;
 
 	temp = *stack;
 	next = (*stack)->next;
@@ -45,7 +45,7 @@ int check_errors(node_list **stack)
 			{
 				write(2, "Error\n", 6);
 				exit(EXIT_FAILURE);
-			};
+			}
 		}
 		temp = temp->next;
 		next = temp->next;
@@ -62,4 +62,3 @@ int check_errors(node_list **stack)
 	write(2, "Error\n", 6);
 	exit(EXIT_FAILURE);
 }
-

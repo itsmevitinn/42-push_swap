@@ -6,25 +6,22 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:56:08 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/07 23:54:00 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/08 11:35:26 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	node_list **stack_a;
-	node_list **stack_b;
-	int indexargv;
+	node_list	**stack_a;
+	node_list	**stack_b;
+	int			indexargv;
 
 	stack_a = malloc(sizeof(node_list));
 	stack_b = malloc(sizeof(node_list));
 	indexargv = 1;
 	while (indexargv < argc)
-	{
-		insert_last_node(stack_a, ft_atoi(argv[indexargv]));
-		indexargv++;
-	}
+		insert_last_node(stack_a, ft_atoi(argv[indexargv++]));
 	check_errors(stack_a);
 	if ((argc - 1) == 2)
 		sort_2(stack_a);
@@ -33,23 +30,21 @@ int main(int argc, char **argv)
 	else if ((argc - 1) <= 5)
 		sort_5(stack_a, stack_b, argc - 1);
 	else if ((argc - 1) == 100)
-	{
 		sort_100(stack_a, stack_b, argc - 1);
-		*stack_b = NULL;
-	}
 	else if ((argc - 1) >= 350)
 	{
-		get_index(stack_a);
+		get_index(stack_a, count_len(stack_a), 1);
 		radix_sort(stack_a, stack_b);
 	}
-	// print_stacks(stack_a, stack_b);
+	*stack_b = NULL; //faze funcao de free
+	// print_stacks(stack_a, stack_b); 
 	return (0);
 }
 
 void	organize_b(node_list **stack_a, node_list **stack_b, int value)
 {
-	int middle;
-	int len_b;
+	int	middle;
+	int	len_b;
 
 	len_b = count_len(stack_b);
 	middle = greb_middle(stack_b, count_len(stack_b));
@@ -63,10 +58,10 @@ void	organize_b(node_list **stack_a, node_list **stack_b, int value)
 		push(stack_a, stack_b, 'b');
 }
 
-void bubble_sort(int *ordened, int len)
+void	bubble_sort(int *ordened, int len)
 {
-	int i;
-	int temp;
+	int	temp;
+	int	i;
 
 	i = 0;
 	len--;
@@ -84,17 +79,17 @@ void bubble_sort(int *ordened, int len)
 	}
 }
 
-int greb_middle(node_list **stack_a, int len)
+int	greb_middle(node_list **stack_a, int len)
 {
-	node_list *temp;
-	int *ordened;
-	int i;
-	int half;
+	node_list	*temp;
+	int			*ordened;
+	int			half;
+	int			i;
 
+	temp = *stack_a;
+	ordened = malloc(sizeof(int) * len);
 	half = len / 2;
 	i = 0;
-	ordened = malloc(sizeof(int) * len);
-	temp = *stack_a;
 	while (i < len && temp)
 	{
 		ordened[i] = temp->value;

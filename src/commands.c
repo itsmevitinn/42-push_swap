@@ -6,17 +6,18 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:42:14 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/07 12:41:13 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/08 11:37:00 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
 
-void swap(node_list **stack_list, char type)
+void	swap(node_list **stack_list, char type)
 {
-	node_list *first;
-	node_list *second;
-	node_list *third;
+	node_list	*first;
+	node_list	*second;
+	node_list	*third;
+
 	first = *stack_list;
 	second = (*stack_list)->next;
 	third = second->next;
@@ -29,15 +30,16 @@ void swap(node_list **stack_list, char type)
 		ft_printf("sb\n");
 }
 
-void insert_first_node(node_list **stack, node_list *first)
+void	insert_first_node(node_list **stack, node_list *first)
 {
 	first->next = *stack;
 	*stack = first;
 }
 
-void push(node_list **stack_a, node_list **stack_b, char type)
+void	push(node_list **stack_a, node_list **stack_b, char type)
 {
-	node_list *temp_sender;
+	node_list	*temp_sender;
+
 	if (type == 'a')
 	{
 		temp_sender = (*stack_b)->next;
@@ -54,20 +56,21 @@ void push(node_list **stack_a, node_list **stack_b, char type)
 	}
 }
 
-node_list *get_last(node_list *stack)
+node_list	*get_last(node_list *stack)
 {
-	node_list *current;
+	node_list	*current;
+
 	current = stack;
 	while (current->next != NULL)
 		current = current->next;
 	return (current);
 }
 
-void rotate(node_list **stack, char type)
+void	rotate(node_list **stack, char type)
 {
-	node_list *first;
-	node_list *second;
-	node_list *last;
+	node_list	*first;
+	node_list	*second;
+	node_list	*last;
 
 	second = (*stack)->next;
 	first = *stack;
@@ -81,11 +84,11 @@ void rotate(node_list **stack, char type)
 		ft_printf("ra\n");
 }
 
-void reverse_rotate(node_list **stack, char type)
+void	reverse_rotate(node_list **stack, char type)
 {
-	node_list *prev;
-	node_list *last;
-	node_list *first;
+	node_list	*prev;
+	node_list	*last;
+	node_list	*first;
 
 	first = *stack;
 	last = *stack;
@@ -103,21 +106,20 @@ void reverse_rotate(node_list **stack, char type)
 		ft_printf("rra\n");
 }
 
-void ss(node_list **stack_a, node_list **stack_b)
+void	ss(node_list **stack_a, node_list **stack_b)
 {
 	swap(stack_a, 'a');
 	swap(stack_b, 'b');
 }
 
-void rr(node_list **stack_a, node_list **stack_b)
+void	rr(node_list **stack_a, node_list **stack_b)
 {
 	rotate(stack_a, 'a');
 	rotate(stack_b, 'b');
 }
 
-void rrr(node_list **stack_a, node_list **stack_b)
+void	rrr(node_list **stack_a, node_list **stack_b)
 {
 	reverse_rotate(stack_a, 'a');
 	reverse_rotate(stack_b, 'b');
 }
-

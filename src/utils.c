@@ -6,15 +6,15 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:53:22 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/07 12:41:34 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/08 11:31:25 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
 
-int count_len(node_list **stack)
+int	count_len(node_list **stack)
 {
-	node_list *temp;
-	int len;
+	node_list	*temp;
+	int			len;
 
 	temp = *stack;
 	len = 0;
@@ -26,10 +26,10 @@ int count_len(node_list **stack)
 	return (len);
 }
 
-int find_position(node_list **stack, int value)
+int	find_position(node_list **stack, int value)
 {
-	node_list *temp;
-	int position;
+	node_list	*temp;
+	int			position;
 
 	temp = *stack;
 	position = 0;
@@ -38,7 +38,7 @@ int find_position(node_list **stack, int value)
 		if (temp->value == value)
 		{
 			position++;
-			break;
+			break ;
 		}
 		position++;
 		temp = temp->next;
@@ -46,10 +46,11 @@ int find_position(node_list **stack, int value)
 	return (position);
 }
 
-void insert_last_node(node_list **stack, int value)
+void	insert_last_node(node_list **stack, int value)
 {
-	node_list *new_node;
-	node_list *last;
+	node_list	*new_node;
+	node_list	*last;
+
 	new_node = malloc(sizeof(node_list));
 	new_node->value = value;
 	new_node->index = 0;
@@ -57,17 +58,17 @@ void insert_last_node(node_list **stack, int value)
 	if (*stack == NULL)
 	{
 		*stack = new_node;
-		return;
+		return ;
 	}
 	last = *stack;
 	last = get_last(last);
 	last->next = new_node;
 }
 
-void print_stacks(node_list **stack_a, node_list **stack_b)
+void	print_stacks(node_list **stack_a, node_list **stack_b)
 {
-	node_list *current_a;
-	node_list *current_b;
+	node_list	*current_a;
+	node_list	*current_b;
 
 	current_a = *stack_a;
 	current_b = *stack_b;
@@ -77,11 +78,13 @@ void print_stacks(node_list **stack_a, node_list **stack_b)
 		if (current_a)
 		{
 			ft_printf("%i ", current_a->value);
+			ft_printf("index: %i ", current_a->index);
 			current_a = current_a->next;
 		}
 		if (current_b)
 		{
-			ft_printf("%i", current_b->value);
+			ft_printf("%i ", current_b->value);
+			ft_printf("index: %i ", current_b->index);
 			current_b = current_b->next;
 		}
 		ft_printf("\n");
@@ -89,11 +92,11 @@ void print_stacks(node_list **stack_a, node_list **stack_b)
 	ft_printf("- -\na b\n");
 }
 
-int get_highest_bit(node_list **stack)
+int	get_highest_bit(node_list **stack)
 {
-	node_list *temp;
-	int highest;
-	int bits;
+	node_list	*temp;
+	int			highest;
+	int			bits;
 
 	bits = 0;
 	temp = *stack;
@@ -104,7 +107,7 @@ int get_highest_bit(node_list **stack)
 			highest = temp->value;
 		temp = temp->next;
 	}
-	while(highest >> bits != 0)
+	while (highest >> bits != 0)
 		bits++;
 	return (bits);
 }
