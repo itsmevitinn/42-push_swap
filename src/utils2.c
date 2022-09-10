@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:52:19 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/08 18:25:17 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/10 19:27:38 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -26,31 +26,27 @@ int	which_is_better(int highest_position, int second_position, int len)
 		return (0);
 }
 
-int	pick_second_highest(node_list **stack, int len, int highest_value)
+int	pick_second_highest(node_list **stack)
 {
 	node_list	*temp;
 	int			highest;
+	int			highest_value;
 	int			counter;
-	int			limiter;
 
-	limiter = 0;
+	highest_value = pick_value(stack, 'h');
 	counter = 0;
 	temp = *stack;
 	highest = -2147483648;
-	while (temp != NULL && limiter < len)
+	while (temp != NULL)
 	{
 		if (highest < temp->value && temp->value < highest_value)
-		{
 			highest = temp->value;
-			counter++;
-		}
 		temp = temp->next;
-		limiter++;
 	}
 	return (highest);
 }
 
-int	pick_value(node_list **stack, int len, char type)
+int	pick_value(node_list **stack, char type)
 {
 	node_list	*temp;
 	int			value;
@@ -104,4 +100,32 @@ void	get_index(node_list **stack_a, int len, int index)
 		if (smallest_node != NULL)
 			smallest_node->index = index++;
 	}
+}
+
+int	how_many_actions(int position, int half, int len)
+{
+	int	actions;
+
+	actions = 0;
+	while (position <= half)
+	{
+		if (position == 1)
+		{
+			actions++;
+			break ;
+		}
+		position--;
+		actions++;
+	}
+	while (position > half)
+	{
+		if (position == len)
+		{
+			actions += 2;
+			break ;
+		}
+		position++;
+		actions++;
+	}
+	return (actions);
 }

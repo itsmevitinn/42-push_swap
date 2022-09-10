@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:26:12 by vsergio           #+#    #+#             */
-/*   Updated: 2022/08/30 12:05:01 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/10 19:08:20 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void		*ft_memset(void *b, int c, size_t len);
 void		ft_bzero(void *s, size_t n);
 void		*ft_memcpy(void *dst, const void *src, size_t n);
 int			ft_atoi(const char *str);
+int			ft_atoi_push(char *str);
 char		*ft_strdup(char *s1);
 int			ft_toupper(int c);
 size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);

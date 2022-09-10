@@ -6,10 +6,38 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:53:22 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/08 11:31:25 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/10 19:29:29 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
+
+void	send_to_b(node_list **stack_a, node_list **stack_b, int pos, int len)
+{
+	int	half;
+
+	half = len / 2;
+	while (pos <= half)
+	{
+		if (pos == 1)
+		{
+			push(stack_a, stack_b, 'b');
+			break ;
+		}
+		rotate(stack_a, 'a', len);
+		pos--;
+	}
+	while (pos > half)
+	{
+		if (pos == len)
+		{
+			reverse_rotate(stack_a, 'a', len);
+			push(stack_a, stack_b, 'b');
+			break ;
+		}
+		reverse_rotate(stack_a, 'a', len);
+		pos++;
+	}
+}
 
 int	count_len(node_list **stack)
 {
@@ -26,11 +54,16 @@ int	count_len(node_list **stack)
 	return (len);
 }
 
-int	find_position(node_list **stack, int value)
+int	find_position(node_list **stack, char type)
 {
 	node_list	*temp;
 	int			position;
+	int			value;
 
+	if (type == 'o')
+		value = pick_second_highest(stack);
+	else
+		value = pick_value(stack, type);
 	temp = *stack;
 	position = 0;
 	while (temp)
@@ -63,33 +96,6 @@ void	insert_last_node(node_list **stack, int value)
 	last = *stack;
 	last = get_last(last);
 	last->next = new_node;
-}
-
-void	print_stacks(node_list **stack_a, node_list **stack_b)
-{
-	node_list	*current_a;
-	node_list	*current_b;
-
-	current_a = *stack_a;
-	current_b = *stack_b;
-	write(1, "\n", 1);
-	while (current_a || current_b)
-	{
-		if (current_a)
-		{
-			ft_printf("%i ", current_a->value);
-			ft_printf("index: %i ", current_a->index);
-			current_a = current_a->next;
-		}
-		if (current_b)
-		{
-			ft_printf("%i ", current_b->value);
-			ft_printf("index: %i ", current_b->index);
-			current_b = current_b->next;
-		}
-		ft_printf("\n");
-	}
-	ft_printf("- -\na b\n");
 }
 
 int	get_highest_bit(node_list **stack)
