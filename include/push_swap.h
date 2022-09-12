@@ -11,7 +11,6 @@ typedef struct node
 }				node_list;
 
 node_list	*get_last(node_list *stack);
-void		print_stacks(node_list **stack_a, node_list **stack_b);
 void		free_nodes(node_list **stack_a, node_list **stack_b);
 void		send_to_a(node_list **stack_a, node_list **stack_b, int pos, int len);
 void		send_to_b(node_list **stack_a, node_list **stack_b, int pos, int len);
