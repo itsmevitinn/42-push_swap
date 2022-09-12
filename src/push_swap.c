@@ -6,11 +6,10 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:56:08 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/10 19:43:08 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/11 22:30:24 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
-#include <stdlib.h>
 
 int	main(int argc, char **argv)
 {
@@ -27,8 +26,35 @@ int	main(int argc, char **argv)
 		insert_last_node(stack_a, ft_atoi_push(argv[indexargv++]));
 	duplicated_or_ordened(stack_a);
 	choose_algorithm(stack_a, stack_b, argc);
-	*stack_b = NULL; //faze funcao de free
+	// print_stacks(stack_a, stack_b); -> to check if stack_b is empty
+	// free_nodes(stack_a, stack_b);
 	return (0);
+}
+
+void	print_stacks(node_list **stack_a, node_list **stack_b)
+{
+	node_list *temp_a;
+	node_list *temp_b;
+
+	temp_a = *stack_a;
+	temp_b = *stack_b;
+
+	while(temp_a || temp_b)
+	{
+		if (temp_a)
+		{
+			ft_printf("%i ", temp_a->value);
+			temp_a = temp_a->next;
+		}
+		if (temp_b)
+		{
+			ft_printf("%i", temp_b->value);
+			temp_b = temp_b->next;
+		}
+		ft_printf("\n");
+	}
+	ft_printf("- -\n");
+	ft_printf("a b\n");
 }
 
 void	choose_algorithm(node_list **stack_a, node_list **stack_b, int argc)
