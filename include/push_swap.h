@@ -31,7 +31,6 @@ void		rotate(node_list **stack, char type, int len);
 void		reverse_rotate(node_list **stack, char type, int len);
 void		duplicated_or_ordened(node_list **stack_a);
 int			pick_second_highest(node_list **stack);
-int			find_position_second(node_list **stack, int value);
 int			how_many_actions(int position, int half, int len);
 int			check_order_b(node_list **stack_a, node_list **stack_b);
 int			check_order_a(node_list **stack_a);
