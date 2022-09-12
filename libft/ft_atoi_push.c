@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 08:59:49 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/10 19:13:52 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/12 14:21:55 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	check_atoi_numbers(char *string)
 	char *temp;
 
 	temp = string;
+	if (*temp == 0)
+		return (0);
 	while (*temp)
 	{
 		if (*temp >= '0' && *temp <= '9')
