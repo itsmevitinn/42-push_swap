@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:56:08 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/11 22:30:24 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/12 09:36:26 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -26,35 +26,8 @@ int	main(int argc, char **argv)
 		insert_last_node(stack_a, ft_atoi_push(argv[indexargv++]));
 	duplicated_or_ordened(stack_a);
 	choose_algorithm(stack_a, stack_b, argc);
-	// print_stacks(stack_a, stack_b); -> to check if stack_b is empty
-	// free_nodes(stack_a, stack_b);
+	free_nodes(stack_a, stack_b);
 	return (0);
-}
-
-void	print_stacks(node_list **stack_a, node_list **stack_b)
-{
-	node_list *temp_a;
-	node_list *temp_b;
-
-	temp_a = *stack_a;
-	temp_b = *stack_b;
-
-	while(temp_a || temp_b)
-	{
-		if (temp_a)
-		{
-			ft_printf("%i ", temp_a->value);
-			temp_a = temp_a->next;
-		}
-		if (temp_b)
-		{
-			ft_printf("%i", temp_b->value);
-			temp_b = temp_b->next;
-		}
-		ft_printf("\n");
-	}
-	ft_printf("- -\n");
-	ft_printf("a b\n");
 }
 
 void	choose_algorithm(node_list **stack_a, node_list **stack_b, int argc)
@@ -116,6 +89,7 @@ int	greb_middle(node_list **stack_a, int len)
 	int			*ordened;
 	int			half;
 	int			i;
+	int			middle;
 
 	temp = *stack_a;
 	ordened = malloc(sizeof(int) * len);
@@ -128,5 +102,7 @@ int	greb_middle(node_list **stack_a, int len)
 		i++;
 	}
 	bubble_sort(ordened, len);
-	return (ordened[half - 1]);
+	middle = ordened[half - 1];
+	free(ordened);
+	return (middle);
 }
