@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:56:08 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/12 14:31:46 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/12 17:54:30 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 	indexargv = 1;
 	while (indexargv < argc)
 		insert_last_node(stack_a, ft_atoi_push(argv[indexargv++]));
-	duplicated_or_ordened(stack_a);
+	duplicated_or_ordened(stack_a, stack_b);
 	choose_algorithm(stack_a, stack_b, argc);
 	free_nodes(stack_a, stack_b);
 	return (0);

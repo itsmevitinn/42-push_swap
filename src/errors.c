@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:52:54 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/10 19:50:52 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/12 17:54:00 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -43,7 +43,7 @@ int	check_order_a(node_list **stack_a)
 	return (1);
 }
 
-void	duplicated_or_ordened(node_list **stack_a)
+void	duplicated_or_ordened(node_list **stack_a, node_list **stack_b)
 {
 	node_list	*temp;
 	node_list	*next;
@@ -58,6 +58,7 @@ void	duplicated_or_ordened(node_list **stack_a)
 				next = next->next;
 			else
 			{
+				free_nodes(stack_a, stack_b);
 				write(2, "Error\n", 6);
 				exit(EXIT_FAILURE);
 			}
@@ -66,7 +67,10 @@ void	duplicated_or_ordened(node_list **stack_a)
 		next = temp->next;
 	}
 	if (check_order_a(stack_a) == 1)
+	{
+		free_nodes(stack_a, stack_b);
 		exit(EXIT_FAILURE);
+	}
 }
 
 void	send_to_a(node_list **stack_a, node_list **stack_b, int pos, int len)

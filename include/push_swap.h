@@ -29,7 +29,7 @@ void		push(node_list **stack_a, node_list **stack_b, char type);
 void		swap(node_list **stack_list, char type);
 void		rotate(node_list **stack, char type, int len);
 void		reverse_rotate(node_list **stack, char type, int len);
-void		duplicated_or_ordened(node_list **stack_a);
+void		duplicated_or_ordened(node_list **stack_a, node_list **stack_b);
 int			pick_second_highest(node_list **stack);
 int			how_many_actions(int position, int half, int len);
 int			check_order_b(node_list **stack_a, node_list **stack_b);
