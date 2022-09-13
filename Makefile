@@ -29,7 +29,7 @@ $(NAME):	$(LIBFT)
 $(LIBFT):
 			@$(MAKE_LIBFT)
 clean: 
-			$(MAKE_IN_DIRECTORY) $(LIBFT_PATH) clean 
+			@$(MAKE_IN_DIRECTORY) $(LIBFT_PATH) clean 
 
 fclean: 	
 			@$(MAKE_IN_DIRECTORY) $(LIBFT_PATH) fclean 
