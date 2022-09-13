@@ -6,7 +6,7 @@
 /*   By: Vitor <vsergio@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 16:59:15 by Vitor             #+#    #+#             */
-/*   Updated: 2022/09/11 22:31:52 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/13 10:55:56 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -29,4 +29,10 @@ void	free_nodes(node_list **stack_a, node_list **stack_b)
 		*stack_b = next;
 	}
 	free(stack_b);
+}
+
+void	write_exit(void)
+{
+	write(2, "Error\n", 6);
+	exit(EXIT_FAILURE);
 }
