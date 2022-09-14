@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../include/push_swap.h"
 
-void	send_to_b(node_list **stack_a, node_list **stack_b, int pos, int len)
+void	send_to_b(t_node **stack_a, t_node **stack_b, int pos, int len)
 {
 	int	half;
 
@@ -39,9 +39,9 @@ void	send_to_b(node_list **stack_a, node_list **stack_b, int pos, int len)
 	}
 }
 
-int	count_len(node_list **stack)
+int	count_len(t_node **stack)
 {
-	node_list	*temp;
+	t_node	*temp;
 	int			len;
 
 	temp = *stack;
@@ -54,9 +54,9 @@ int	count_len(node_list **stack)
 	return (len);
 }
 
-int	find_position(node_list **stack, char type)
+int	find_position(t_node **stack, char type)
 {
-	node_list	*temp;
+	t_node	*temp;
 	int			position;
 	int			value;
 
@@ -79,12 +79,12 @@ int	find_position(node_list **stack, char type)
 	return (position);
 }
 
-void	insert_last_node(node_list **stack, int value)
+void	insert_last_node(t_node **stack, int value)
 {
-	node_list	*new_node;
-	node_list	*last;
+	t_node	*new_node;
+	t_node	*last;
 
-	new_node = malloc(sizeof(node_list));
+	new_node = malloc(sizeof(t_node));
 	new_node->value = value;
 	new_node->index = 0;
 	new_node->next = NULL;
@@ -98,9 +98,9 @@ void	insert_last_node(node_list **stack, int value)
 	last->next = new_node;
 }
 
-int	get_highest_bit(node_list **stack)
+int	get_highest_bit(t_node **stack)
 {
-	node_list	*temp;
+	t_node	*temp;
 	int			highest;
 	int			bits;
 

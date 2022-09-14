@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 #include "../include/push_swap.h"
 
-void	free_all(node_list **stack_a, node_list **stack_b, char **splitted)
+void	free_all(t_node **stack_a, t_node **stack_b, char **splitted)
 {
-	node_list	*next;
+	t_node	*next;
 	int			i;
 
 	while (*stack_a)
@@ -39,7 +39,7 @@ void	free_all(node_list **stack_a, node_list **stack_b, char **splitted)
 	}
 }
 
-void	with_quotes(node_list **stack_a, node_list **stack_b, char **splitted)
+void	with_quotes(t_node **stack_a, t_node **stack_b, char **splitted)
 {
 	char	**temp;
 
@@ -52,7 +52,7 @@ void	with_quotes(node_list **stack_a, node_list **stack_b, char **splitted)
 	}
 }
 
-void	no_quotes(node_list **stack_a, node_list **stack_b, char **argv, int i)
+void	no_quotes(t_node **stack_a, t_node **stack_b, char **argv, int i)
 {
 	int	indexargv;
 
@@ -65,7 +65,7 @@ void	no_quotes(node_list **stack_a, node_list **stack_b, char **argv, int i)
 	}
 }
 
-void	free_and_error(node_list **a, node_list **b, char **splitted)
+void	free_and_error(t_node **a, t_node **b, char **splitted)
 {
 	free_all(a, b, splitted);
 	write(2, "Error\n", 6);

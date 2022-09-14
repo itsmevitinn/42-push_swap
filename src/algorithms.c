@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../include/push_swap.h"
 
-void	sort_b(node_list **stack_a, node_list **stack_b, int len)
+void	sort_b(t_node **stack_a, t_node **stack_b, int len)
 {
 	int	highest_pos;
 	int	second_pos;
@@ -40,7 +40,7 @@ void	sort_b(node_list **stack_a, node_list **stack_b, int len)
 	}
 }
 
-void	sort_3(node_list **stack_a)
+void	sort_3(t_node **stack_a)
 {
 	int	highest_position;
 	int	smallest_position;
@@ -68,11 +68,11 @@ void	sort_3(node_list **stack_a)
 	}
 }
 
-void	sort_smalls(node_list **stack_a, node_list **stack_b, int len)
+void	sort_smalls(t_node **stack_a, t_node **stack_b, int len)
 {
 	int			smallest_position;
 	int			counter;
-	node_list	*next;
+	t_node	*next;
 
 	counter = 0;
 	if (len == 2)
@@ -97,7 +97,7 @@ void	sort_smalls(node_list **stack_a, node_list **stack_b, int len)
 	}
 }
 
-void	sort_larger(node_list **stack_a, node_list **stack_b, int len)
+void	sort_larger(t_node **stack_a, t_node **stack_b, int len)
 {
 	int	middle;
 	int	counter;
@@ -125,7 +125,7 @@ void	sort_larger(node_list **stack_a, node_list **stack_b, int len)
 	sort_b(stack_a, stack_b, len);
 }
 
-void	radix_sort(node_list **stack_a, node_list **stack_b)
+void	radix_sort(t_node **stack_a, t_node **stack_b)
 {
 	int	highest_bit;
 	int	run_numbers;

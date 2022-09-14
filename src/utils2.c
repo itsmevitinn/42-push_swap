@@ -26,9 +26,9 @@ int	which_is_better(int highest_position, int second_position, int len)
 		return (0);
 }
 
-int	pick_second_highest(node_list **stack)
+int	pick_second_highest(t_node **stack)
 {
-	node_list	*temp;
+	t_node	*temp;
 	int			highest;
 	int			highest_value;
 	int			counter;
@@ -46,9 +46,9 @@ int	pick_second_highest(node_list **stack)
 	return (highest);
 }
 
-int	pick_value(node_list **stack, char type)
+int	pick_value(t_node **stack, char type)
 {
-	node_list	*temp;
+	t_node	*temp;
 	int			value;
 
 	temp = *stack;
@@ -73,10 +73,10 @@ int	pick_value(node_list **stack, char type)
 	return (value);
 }
 
-void	get_index(node_list **stack_a, int len, int index)
+void	get_index(t_node **stack_a, int len, int index)
 {
-	node_list	*smallest_node;
-	node_list	*temp;
+	t_node	*smallest_node;
+	t_node	*temp;
 	int			smallest_value;
 
 	while (index <= len)

@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 #include "../include/push_swap.h"
 
-int	check_order_b(node_list **stack_a, node_list **stack_b)
+int	check_order_b(t_node **stack_a, t_node **stack_b)
 {
-	node_list	*temp;
+	t_node	*temp;
 
 	temp = *stack_b;
 	while (temp->next != NULL)
@@ -28,9 +28,9 @@ int	check_order_b(node_list **stack_a, node_list **stack_b)
 	return (1);
 }
 
-int	check_order_a(node_list **stack_a)
+int	check_order_a(t_node **stack_a)
 {
-	node_list	*temp;
+	t_node	*temp;
 
 	temp = *stack_a;
 	while (temp->next != NULL)
@@ -43,10 +43,10 @@ int	check_order_a(node_list **stack_a)
 	return (1);
 }
 
-void	dup_or_ordened(node_list **stack_a, node_list **stack_b, char **split)
+void	dup_or_ordened(t_node **stack_a, t_node **stack_b, char **split)
 {
-	node_list	*temp;
-	node_list	*next;
+	t_node	*temp;
+	t_node	*next;
 
 	temp = *stack_a;
 	next = (*stack_a)->next;
@@ -69,7 +69,7 @@ void	dup_or_ordened(node_list **stack_a, node_list **stack_b, char **split)
 	}
 }
 
-void	send_to_a(node_list **stack_a, node_list **stack_b, int pos, int len)
+void	send_to_a(t_node **stack_a, t_node **stack_b, int pos, int len)
 {
 	int	half;
 
@@ -97,7 +97,7 @@ void	send_to_a(node_list **stack_a, node_list **stack_b, int pos, int len)
 	}
 }
 
-void	insert_first_node(node_list **stack, node_list *first)
+void	insert_first_node(t_node **stack, t_node *first)
 {
 	first->next = *stack;
 	*stack = first;

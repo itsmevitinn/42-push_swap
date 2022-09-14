@@ -12,11 +12,11 @@
 
 #include "../include/push_swap.h"
 
-void	swap(node_list **stack_list, char type)
+void	swap(t_node **stack_list, char type)
 {
-	node_list	*first;
-	node_list	*second;
-	node_list	*third;
+	t_node	*first;
+	t_node	*second;
+	t_node	*third;
 
 	first = *stack_list;
 	second = (*stack_list)->next;
@@ -30,9 +30,9 @@ void	swap(node_list **stack_list, char type)
 		ft_printf("sb\n");
 }
 
-void	push(node_list **stack_a, node_list **stack_b, char type)
+void	push(t_node **stack_a, t_node **stack_b, char type)
 {
-	node_list	*temp_sender;
+	t_node	*temp_sender;
 
 	if (type == 'a')
 	{
@@ -50,9 +50,9 @@ void	push(node_list **stack_a, node_list **stack_b, char type)
 	}
 }
 
-node_list	*get_last(node_list *stack)
+t_node	*get_last(t_node *stack)
 {
-	node_list	*current;
+	t_node	*current;
 
 	current = stack;
 	while (current->next != NULL)
@@ -60,11 +60,11 @@ node_list	*get_last(node_list *stack)
 	return (current);
 }
 
-void	rotate(node_list **stack, char type, int len)
+void	rotate(t_node **stack, char type, int len)
 {
-	node_list	*first;
-	node_list	*second;
-	node_list	*last;
+	t_node	*first;
+	t_node	*second;
+	t_node	*last;
 
 	if (len > 1)
 	{
@@ -83,11 +83,11 @@ void	rotate(node_list **stack, char type, int len)
 		return ;
 }
 
-void	reverse_rotate(node_list **stack, char type, int len)
+void	reverse_rotate(t_node **stack, char type, int len)
 {
-	node_list	*prev;
-	node_list	*last;
-	node_list	*first;
+	t_node	*prev;
+	t_node	*last;
+	t_node	*first;
 
 	if (len > 1)
 	{

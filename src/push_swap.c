@@ -13,16 +13,16 @@
 
 int	main(int argc, char **argv)
 {
-	node_list	**stack_a;
-	node_list	**stack_b;
+	t_node	**stack_a;
+	t_node	**stack_b;
 	char		**splitted;
 	int			indexargv;
 
 	indexargv = 1;
 	if (argc == 1)
 		return (0);
-	stack_a = malloc(sizeof(node_list));
-	stack_b = malloc(sizeof(node_list));
+	stack_a = malloc(sizeof(t_node));
+	stack_b = malloc(sizeof(t_node));
 	if (argc == 2)
 	{
 		if (*argv[1] == 0)
@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-void	sort(node_list **stk_a, node_list **stk_b, int argc, char **split)
+void	sort(t_node **stk_a, t_node **stk_b, int argc, char **split)
 {
 	int	countsplits;
 
@@ -62,7 +62,7 @@ void	sort(node_list **stk_a, node_list **stk_b, int argc, char **split)
 	}
 }
 
-void	organize_b(node_list **stack_a, node_list **stack_b, int value)
+void	organize_b(t_node **stack_a, t_node **stack_b, int value)
 {
 	int	middle;
 	int	len_b;
@@ -100,9 +100,9 @@ void	bubble_sort(int *ordened, int len)
 	}
 }
 
-int	greb_middle(node_list **stack_a, int len)
+int	greb_middle(t_node **stack_a, int len)
 {
-	node_list	*temp;
+	t_node	*temp;
 	int			*ordened;
 	int			half;
 	int			i;
