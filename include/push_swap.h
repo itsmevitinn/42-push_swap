@@ -1,21 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/14 16:37:43 by vsergio           #+#    #+#             */
+/*   Updated: 2022/09/14 16:49:00 by vsergio          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
 # include "../libft/libft.h"
 
-typedef struct node
+typedef struct j_list
 {
 	int			index;
 	int 		value;
 	struct node *next; 
-}				node_list;
+}				t_node;
 
-node_list	*get_last(node_list *stack);
-void		send_to_a(node_list **stack_a, node_list **stack_b, int pos, int len);
-void		send_to_b(node_list **stack_a, node_list **stack_b, int pos, int len);
-void		sort_b(node_list **stack_a, node_list **stack_b, int len);
-void		organize_b(node_list **stack_a, node_list **stack_b, int value);
-void		sorter(node_list **stack_a, node_list **stack_b, int argc, char **split);
+node_list	*get_last(t_node *stack);
+void		send_a(t_node **stack_a, t_list **stack_b, int pos, int len);
+void		send_b(t_node **stack_a, node_list **stack_b, int pos, int len);
+void		sort_b(t_node **stack_a, node_list **stack_b, int len);
+void		organize_b(t_node **stack_a, node_list **stack_b, int value);
+void		sort(node_list **stk_a, node_list **stk_b, int argc, char **split);
 void		bubble_sort(int *ordened, int len);
 void		sort_3(node_list **stack_a);
 void		sort_smalls(node_list **stack_a, node_list **stack_b, int len);

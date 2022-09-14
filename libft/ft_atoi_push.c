@@ -6,13 +6,15 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 08:59:49 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/14 14:19:12 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/14 16:37:15 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
 int	check_atoi_numbers(char *string);
+
 long int	ft_atoi_push(char *str)
+
 {
 	long int	res;
 	int			sign;
@@ -42,7 +44,7 @@ long int	ft_atoi_push(char *str)
 
 int	check_atoi_numbers(char *string)
 {
-	char *temp;
+	char	*temp;
 
 	temp = string;
 	if (*temp == 0)

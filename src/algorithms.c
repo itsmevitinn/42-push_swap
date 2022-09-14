@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 11:27:04 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/11 22:24:46 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/14 16:40:53 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -25,16 +25,16 @@ void	sort_b(node_list **stack_a, node_list **stack_b, int len)
 			second_pos = find_position(stack_b, 'o');
 		if (which_is_better(highest_pos, second_pos, len) == 1 && len > 1)
 		{
-			send_to_a(stack_a, stack_b, second_pos, len);
+			send_a(stack_a, stack_b, second_pos, len);
 			len -= 1;
 			highest_pos = find_position(stack_b, 'h');
-			send_to_a(stack_a, stack_b, highest_pos, len);
+			send_a(stack_a, stack_b, highest_pos, len);
 			len -= 1;
 			swap(stack_a, 'a');
 		}
 		else
 		{
-			send_to_a(stack_a, stack_b, highest_pos, len);
+			send_a(stack_a, stack_b, highest_pos, len);
 			len -= 1;
 		}
 	}
@@ -86,7 +86,7 @@ void	sort_smalls(node_list **stack_a, node_list **stack_b, int len)
 		while (counter < 2 && !check_order_a(stack_a))
 		{
 			smallest_position = find_position(stack_a, 's');
-			send_to_b(stack_a, stack_b, smallest_position, len);
+			send_b(stack_a, stack_b, smallest_position, len);
 			len -= 1;
 			counter++;
 		}

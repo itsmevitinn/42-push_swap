@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:56:08 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/14 16:18:41 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/14 16:47:13 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -33,12 +33,12 @@ int	main(int argc, char **argv)
 	else
 		no_quotes(stack_a, stack_b, argv, argc);
 	dup_or_ordened(stack_a, stack_b, splitted);
-	sorter(stack_a, stack_b, argc, splitted);
+	sort(stack_a, stack_b, argc, splitted);
 	free_all(stack_a, stack_b, splitted);
 	return (0);
 }
 
-void	sorter(node_list **stack_a, node_list **stack_b, int argc, char **split)
+void	sort(node_list **stk_a, node_list **stk_b, int argc, char **split)
 {
 	int	countsplits;
 
@@ -50,15 +50,15 @@ void	sorter(node_list **stack_a, node_list **stack_b, int argc, char **split)
 		argc = countsplits + 1;
 	}
 	if ((argc - 1) == 3)
-		sort_3(stack_a);
+		sort_3(stk_a);
 	else if ((argc - 1) <= 5)
-		sort_smalls(stack_a, stack_b, argc - 1);
+		sort_smalls(stk_a, stk_b, argc - 1);
 	else if ((argc - 1) < 350)
-		sort_larger(stack_a, stack_b, argc - 1);
+		sort_larger(stk_a, stk_b, argc - 1);
 	else if ((argc - 1) >= 350)
 	{
-		get_index(stack_a, count_len(stack_a), 1);
-		radix_sort(stack_a, stack_b);
+		get_index(stk_a, count_len(stk_a), 1);
+		radix_sort(stk_a, stk_b);
 	}
 }
 
