@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:52:54 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/13 10:56:08 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/14 16:01:57 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -43,7 +43,7 @@ int	check_order_a(node_list **stack_a)
 	return (1);
 }
 
-void	duplicated_or_ordened(node_list **stack_a, node_list **stack_b)
+void	dup_or_ordened(node_list **stack_a, node_list **stack_b, char **split)
 {
 	node_list	*temp;
 	node_list	*next;
@@ -57,17 +57,14 @@ void	duplicated_or_ordened(node_list **stack_a, node_list **stack_b)
 			if (temp->value != next->value)
 				next = next->next;
 			else
-			{
-				free_nodes(stack_a, stack_b);
-				write_exit();
-			}
+				free_and_error(stack_a, stack_b, split);
 		}
 		temp = temp->next;
 		next = temp->next;
 	}
 	if (check_order_a(stack_a) == 1)
 	{
-		free_nodes(stack_a, stack_b);
+		free_all(stack_a, stack_b, split);
 		exit(EXIT_FAILURE);
 	}
 }

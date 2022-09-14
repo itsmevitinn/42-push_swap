@@ -11,12 +11,11 @@ typedef struct node
 }				node_list;
 
 node_list	*get_last(node_list *stack);
-void		free_nodes(node_list **stack_a, node_list **stack_b);
 void		send_to_a(node_list **stack_a, node_list **stack_b, int pos, int len);
 void		send_to_b(node_list **stack_a, node_list **stack_b, int pos, int len);
 void		sort_b(node_list **stack_a, node_list **stack_b, int len);
 void		organize_b(node_list **stack_a, node_list **stack_b, int value);
-void		choose_algorithm(node_list **stack_a, node_list **stack_b, int argc);
+void		choose_algorithm(node_list **stack_a, node_list **stack_b, int argc, char **splitted);
 void		bubble_sort(int *ordened, int len);
 void		sort_3(node_list **stack_a);
 void		sort_smalls(node_list **stack_a, node_list **stack_b, int len);
@@ -29,8 +28,11 @@ void		push(node_list **stack_a, node_list **stack_b, char type);
 void		swap(node_list **stack_list, char type);
 void		rotate(node_list **stack, char type, int len);
 void		reverse_rotate(node_list **stack, char type, int len);
-void		duplicated_or_ordened(node_list **stack_a, node_list **stack_b);
+void		free_all(node_list **stack_a, node_list **stack_b, char **splitted);
+void		dup_or_ordened(node_list **stack_a, node_list **stack_b, char **split);
 void		write_exit(void);
+void		with_quotes(node_list **stack_a, node_list **stack_b, char **splitted);
+void		without_quotes(node_list **stack_a, node_list **stack_b, char **argv, int argc);
 int			pick_second_highest(node_list **stack);
 int			how_many_actions(int position, int half, int len);
 int			check_order_b(node_list **stack_a, node_list **stack_b);
@@ -41,4 +43,5 @@ int			get_highest_bit(node_list **stack);
 int			count_len(node_list **stack);
 int			pick_value(node_list **stack, char type);
 int			find_position(node_list **stack, char type);
+void		free_and_error(node_list **a, node_list **b, char **splitted);
 #endif
