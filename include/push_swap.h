@@ -30,7 +30,6 @@ void		rotate(node_list **stack, char type, int len);
 void		reverse_rotate(node_list **stack, char type, int len);
 void		free_all(node_list **stack_a, node_list **stack_b, char **splitted);
 void		dup_or_ordened(node_list **stack_a, node_list **stack_b, char **split);
-void		write_exit(void);
 void		with_quotes(node_list **stack_a, node_list **stack_b, char **splitted);
 void		no_quotes(node_list **stack_a, node_list **stack_b, char **argv, int i);
 int			pick_second_highest(node_list **stack);
