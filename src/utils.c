@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:53:22 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/10 19:29:29 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/14 17:05:00 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -42,7 +42,7 @@ void	send_to_b(t_node **stack_a, t_node **stack_b, int pos, int len)
 int	count_len(t_node **stack)
 {
 	t_node	*temp;
-	int			len;
+	int		len;
 
 	temp = *stack;
 	len = 0;
@@ -57,8 +57,8 @@ int	count_len(t_node **stack)
 int	find_position(t_node **stack, char type)
 {
 	t_node	*temp;
-	int			position;
-	int			value;
+	int		position;
+	int		value;
 
 	if (type == 'o')
 		value = pick_second_highest(stack);
@@ -101,8 +101,8 @@ void	insert_last_node(t_node **stack, int value)
 int	get_highest_bit(t_node **stack)
 {
 	t_node	*temp;
-	int			highest;
-	int			bits;
+	int		highest;
+	int		bits;
 
 	bits = 0;
 	temp = *stack;

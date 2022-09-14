@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:56:08 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/14 16:47:13 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/14 17:03:36 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -15,8 +15,8 @@ int	main(int argc, char **argv)
 {
 	t_node	**stack_a;
 	t_node	**stack_b;
-	char		**splitted;
-	int			indexargv;
+	char	**splitted;
+	int		indexargv;
 
 	indexargv = 1;
 	if (argc == 1)
@@ -103,10 +103,10 @@ void	bubble_sort(int *ordened, int len)
 int	greb_middle(t_node **stack_a, int len)
 {
 	t_node	*temp;
-	int			*ordened;
-	int			half;
-	int			i;
-	int			middle;
+	int		*ordened;
+	int		half;
+	int		i;
+	int		middle;
 
 	temp = *stack_a;
 	ordened = malloc(sizeof(int) * len);

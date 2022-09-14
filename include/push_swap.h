@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 16:37:43 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/14 16:49:00 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/14 17:05:58 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 # include "../libft/libft.h"
 
-typedef struct j_list
+typedef struct s_rato
 {
-	int			index;
-	int 		value;
-	struct node *next; 
+	int				index;
+	int				value;
+	struct s_rato	*next;
 }				t_node;
 
 t_node		*get_last(t_node *stack);
-void		send_a(t_node **stack_a, t_list **stack_b, int pos, int len);
+void		send_a(t_node **stack_a, t_node **stack_b, int pos, int len);
 void		send_b(t_node **stack_a, t_node **stack_b, int pos, int len);
 void		sort_b(t_node **stack_a, t_node **stack_b, int len);
 void		organize_b(t_node **stack_a, t_node **stack_b, int value);

@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 11:27:04 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/14 16:40:53 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/14 16:54:53 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -72,7 +72,7 @@ void	sort_smalls(t_node **stack_a, t_node **stack_b, int len)
 {
 	int			smallest_position;
 	int			counter;
-	t_node	*next;
+	t_node		*next;
 
 	counter = 0;
 	if (len == 2)

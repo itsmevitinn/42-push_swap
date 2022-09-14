@@ -6,14 +6,14 @@
 /*   By: Vitor <vsergio@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 16:59:15 by Vitor             #+#    #+#             */
-/*   Updated: 2022/09/14 16:16:09 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/14 16:55:49 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
 
 void	free_all(t_node **stack_a, t_node **stack_b, char **splitted)
 {
-	t_node	*next;
+	t_node		*next;
 	int			i;
 
 	while (*stack_a)

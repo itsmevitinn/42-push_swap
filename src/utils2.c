@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:52:19 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/10 19:27:38 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/14 17:04:41 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -29,9 +29,9 @@ int	which_is_better(int highest_position, int second_position, int len)
 int	pick_second_highest(t_node **stack)
 {
 	t_node	*temp;
-	int			highest;
-	int			highest_value;
-	int			counter;
+	int		highest;
+	int		highest_value;
+	int		counter;
 
 	highest_value = pick_value(stack, 'h');
 	counter = 0;
@@ -49,7 +49,7 @@ int	pick_second_highest(t_node **stack)
 int	pick_value(t_node **stack, char type)
 {
 	t_node	*temp;
-	int			value;
+	int		value;
 
 	temp = *stack;
 	if (type == 's')
@@ -77,7 +77,7 @@ void	get_index(t_node **stack_a, int len, int index)
 {
 	t_node	*smallest_node;
 	t_node	*temp;
-	int			smallest_value;
+	int		smallest_value;
 
 	while (index <= len)
 	{
