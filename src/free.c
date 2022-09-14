@@ -6,7 +6,7 @@
 /*   By: Vitor <vsergio@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 16:59:15 by Vitor             #+#    #+#             */
-/*   Updated: 2022/09/14 16:12:48 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/14 16:16:09 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -34,10 +34,7 @@ void	free_all(node_list **stack_a, node_list **stack_b, char **splitted)
 	{
 		i = 0;
 		while (splitted[i])
-		{
-			free(splitted[i]);
-			i++;
-		}
+			free(splitted[i++]);
 		free(splitted);
 	}
 }
@@ -55,12 +52,12 @@ void	with_quotes(node_list **stack_a, node_list **stack_b, char **splitted)
 	}
 }
 
-void	without_quotes(node_list **stack_a, node_list **stack_b, char **argv, int argc)
+void	no_quotes(node_list **stack_a, node_list **stack_b, char **argv, int i)
 {
 	int	indexargv;
 
 	indexargv = 1;
-	while (indexargv < argc)
+	while (indexargv < i)
 	{
 		if (ft_atoi_push(argv[indexargv]) == 2147483650)
 			free_and_error(stack_a, stack_b, NULL);

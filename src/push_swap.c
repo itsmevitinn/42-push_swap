@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:56:08 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/14 16:03:08 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/14 16:18:41 by vsergio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -16,7 +16,6 @@ int	main(int argc, char **argv)
 	node_list	**stack_a;
 	node_list	**stack_b;
 	char		**splitted;
-	char		**temp;
 	int			indexargv;
 
 	indexargv = 1;
@@ -32,21 +31,21 @@ int	main(int argc, char **argv)
 		with_quotes(stack_a, stack_b, splitted);
 	}
 	else
-		without_quotes(stack_a, stack_b, argv, argc);
+		no_quotes(stack_a, stack_b, argv, argc);
 	dup_or_ordened(stack_a, stack_b, splitted);
-	choose_algorithm(stack_a, stack_b, argc, splitted);
+	sorter(stack_a, stack_b, argc, splitted);
 	free_all(stack_a, stack_b, splitted);
 	return (0);
 }
 
-void	choose_algorithm(node_list **stack_a, node_list **stack_b, int argc, char **splitted)
+void	sorter(node_list **stack_a, node_list **stack_b, int argc, char **split)
 {
 	int	countsplits;
 
 	countsplits = 0;
 	if (argc == 2)
 	{
-		while (*splitted++)
+		while (*split++)
 			countsplits++;
 		argc = countsplits + 1;
 	}
