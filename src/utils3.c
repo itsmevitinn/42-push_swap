@@ -1,42 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Vitor <vsergio@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 16:59:15 by Vitor             #+#    #+#             */
-/*   Updated: 2022/09/14 16:55:49 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/14 21:49:43 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
 
-void	free_all(t_node **stack_a, t_node **stack_b, char **splitted)
+void	insert_first_node(t_node **stack, t_node *first)
 {
-	t_node		*next;
-	int			i;
-
-	while (*stack_a)
-	{
-		next = (*stack_a)->next;
-		free(*stack_a);
-		*stack_a = next;
-	}
-	free(stack_a);
-	while (*stack_b)
-	{
-		next = (*stack_b)->next;
-		free(*stack_b);
-		*stack_b = next;
-	}
-	free(stack_b);
-	if (splitted)
-	{
-		i = 0;
-		while (splitted[i])
-			free(splitted[i++]);
-		free(splitted);
-	}
+	first->next = *stack;
+	*stack = first;
 }
 
 void	with_quotes(t_node **stack_a, t_node **stack_b, char **splitted)
@@ -65,9 +43,22 @@ void	no_quotes(t_node **stack_a, t_node **stack_b, char **argv, int i)
 	}
 }
 
-void	free_and_error(t_node **a, t_node **b, char **splitted)
+int	get_highest_bit(t_node **stack)
 {
-	free_all(a, b, splitted);
-	write(2, "Error\n", 6);
-	exit(EXIT_FAILURE);
+	t_node	*temp;
+	int		highest;
+	int		bits;
+
+	bits = 0;
+	temp = *stack;
+	highest = -2147483648;
+	while (temp != NULL)
+	{
+		if (highest < temp->value)
+			highest = temp->value;
+		temp = temp->next;
+	}
+	while (highest >> bits != 0)
+		bits++;
+	return (bits);
 }

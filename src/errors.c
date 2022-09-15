@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:52:54 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/14 21:42:42 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/14 21:49:53 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -69,36 +69,37 @@ void	dup_or_ordened(t_node **stack_a, t_node **stack_b, char **split)
 	}
 }
 
-void	send_a(t_node **stack_a, t_node **stack_b, int pos, int len)
+void	free_and_error(t_node **a, t_node **b, char **splitted)
 {
-	int	half;
-
-	half = len / 2;
-	while (pos <= half)
-	{
-		if (pos == 1)
-		{
-			push(stack_a, stack_b, 'a');
-			break ;
-		}
-		rotate(stack_b, 'b', len);
-		pos--;
-	}
-	while (pos > half)
-	{
-		if (pos == len)
-		{
-			reverse_rotate(stack_b, 'b', len);
-			push(stack_a, stack_b, 'a');
-			break ;
-		}
-		reverse_rotate(stack_b, 'b', len);
-		pos++;
-	}
+	free_all(a, b, splitted);
+	write(2, "Error\n", 6);
+	exit(EXIT_FAILURE);
 }
 
-void	insert_first_node(t_node **stack, t_node *first)
+void	free_all(t_node **stack_a, t_node **stack_b, char **splitted)
 {
-	first->next = *stack;
-	*stack = first;
+	t_node		*next;
+	int			i;
+
+	while (*stack_a)
+	{
+		next = (*stack_a)->next;
+		free(*stack_a);
+		*stack_a = next;
+	}
+	free(stack_a);
+	while (*stack_b)
+	{
+		next = (*stack_b)->next;
+		free(*stack_b);
+		*stack_b = next;
+	}
+	free(stack_b);
+	if (splitted)
+	{
+		i = 0;
+		while (splitted[i])
+			free(splitted[i++]);
+		free(splitted);
+	}
 }

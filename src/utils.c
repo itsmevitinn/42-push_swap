@@ -6,10 +6,38 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:53:22 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/14 21:42:30 by Vitor            ###   ########.fr       */
+/*   Updated: 2022/09/14 21:48:29 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
+
+void	send_a(t_node **stack_a, t_node **stack_b, int pos, int len)
+{
+	int	half;
+
+	half = len / 2;
+	while (pos <= half)
+	{
+		if (pos == 1)
+		{
+			push(stack_a, stack_b, 'a');
+			break ;
+		}
+		rotate(stack_b, 'b', len);
+		pos--;
+	}
+	while (pos > half)
+	{
+		if (pos == len)
+		{
+			reverse_rotate(stack_b, 'b', len);
+			push(stack_a, stack_b, 'a');
+			break ;
+		}
+		reverse_rotate(stack_b, 'b', len);
+		pos++;
+	}
+}
 
 void	send_b(t_node **stack_a, t_node **stack_b, int pos, int len)
 {
@@ -96,24 +124,4 @@ void	insert_last_node(t_node **stack, int value)
 	last = *stack;
 	last = get_last(last);
 	last->next = new_node;
-}
-
-int	get_highest_bit(t_node **stack)
-{
-	t_node	*temp;
-	int		highest;
-	int		bits;
-
-	bits = 0;
-	temp = *stack;
-	highest = -2147483648;
-	while (temp != NULL)
-	{
-		if (highest < temp->value)
-			highest = temp->value;
-		temp = temp->next;
-	}
-	while (highest >> bits != 0)
-		bits++;
-	return (bits);
 }
