@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:52:54 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/14 16:01:57 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/14 21:42:42 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
@@ -69,7 +69,7 @@ void	dup_or_ordened(t_node **stack_a, t_node **stack_b, char **split)
 	}
 }
 
-void	send_to_a(t_node **stack_a, t_node **stack_b, int pos, int len)
+void	send_a(t_node **stack_a, t_node **stack_b, int pos, int len)
 {
 	int	half;
 

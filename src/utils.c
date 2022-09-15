@@ -6,12 +6,12 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:53:22 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/14 17:05:00 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/14 21:42:30 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/push_swap.h"
 
-void	send_to_b(t_node **stack_a, t_node **stack_b, int pos, int len)
+void	send_b(t_node **stack_a, t_node **stack_b, int pos, int len)
 {
 	int	half;
 
