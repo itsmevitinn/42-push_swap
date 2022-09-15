@@ -6,7 +6,7 @@
 /*   By: vsergio <vsergio@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 16:37:43 by vsergio           #+#    #+#             */
-/*   Updated: 2022/09/14 17:05:58 by vsergio          ###   ########.fr       */
+/*   Updated: 2022/09/14 21:51:23 by Vitor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void		push(t_node **stack_a, t_node **stack_b, char type);
 void		swap(t_node **stack_list, char type);
 void		rotate(t_node **stack, char type, int len);
 void		reverse_rotate(t_node **stack, char type, int len);
+void		free_and_error(t_node **a, t_node **b, char **splitted);
 void		free_all(t_node **stack_a, t_node **stack_b, char **splitted);
 void		dup_or_ordened(t_node **stack_a, t_node **stack_b, char **split);
 void		with_quotes(t_node **stack_a, t_node **stack_b, char **splitted);
@@ -54,5 +55,4 @@ int			get_highest_bit(t_node **stack);
 int			count_len(t_node **stack);
 int			pick_value(t_node **stack, char type);
 int			find_position(t_node **stack, char type);
-void		free_and_error(t_node **a, t_node **b, char **splitted);
 #endif
