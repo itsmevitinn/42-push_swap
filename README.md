@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to push_swap ??</h1>
+<h1 align="center">Welcome to push_swap 👋</h1>
 ---
 
 - Status: Finished
@@ -24,11 +24,11 @@ git clone https://github.com/itsmevitinn/push_swap.git
 
 ## Author
 
-?? **Vitor Marcondes**
+👤 **Vitor Marcondes**
 
 - Github: [@itsmevitinn](https://github.com/itsmevitinn)
 - LinkedIn: [@itsmevitinn](https://www.linkedin.com/in/itsmevitinn/)
 
 ## Show your support
 
-Give a ?? if this project helped you!
+Give a ⭐️ if this project helped you!
